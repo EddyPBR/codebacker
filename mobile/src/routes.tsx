@@ -10,7 +10,9 @@ const AppStack = createStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <AppStack.Navigator>
+      <AppStack.Navigator screenOptions={{
+        headerShown: false,
+      }}>
         <AppStack.Screen name="Home" component={Home} />
         <AppStack.Screen name="CheckList" component={CheckList} />
       </AppStack.Navigator>

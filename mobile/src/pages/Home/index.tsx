@@ -1,28 +1,22 @@
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, Platform } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { RectButton } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 
-import DateTimePicker from "@react-native-community/datetimepicker";
+const codebacker = require("../../assets/Codebacker/codebacker.png");
 
 const Home = () => {
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
+  const [loadingCode, setLoadingCode] = useState("");
 
-  const onChange = (event:any, selectedDate:any) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-  };
-
-  const showDatepicker = () => {
-    setShow(true);
-  };
-
-  const showDate = () => {
-    console.log(date);
-  };
-
-  // nav
   const navigation = useNavigation();
   function handleNavigateToExample() {
     navigation.navigate("CheckList", {
@@ -31,30 +25,79 @@ const Home = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>{String(date)}</Text>
-      <Button onPress={showDatepicker} title="Show date picker!" />
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={"date"}
-          display="default"
-          onChange={onChange}
+    <KeyboardAvoidingView
+      style={styles.main}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}>
+      <Image source={codebacker} />
+      <Text style={styles.subTitle}>
+        Agilize seu carregamento de produtos com checklist dinâmico
+      </Text>
+      <View style={styles.form}>
+        <Text style={styles.label}>Código de carregamento</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Ex.: 98705414"
+          value={loadingCode}
+          autoCorrect={false}
+          onChangeText={setLoadingCode}
+          placeholderTextColor="#898383"
+          keyboardType="number-pad"
         />
-      )}
-      <Button onPress={showDate} title="show date" />
-      <Button onPress={handleNavigateToExample} title="Check List" />
-    </View>
+        <LinearGradient colors={["#E53035", "#BC151B"]} style={styles.button}>
+          <RectButton onPress={handleNavigateToExample}>
+            <Text style={styles.buttonText}>Ver Lista</Text>
+          </RectButton>
+        </LinearGradient>
+      </View>
+      
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  main: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#DEDEE3",
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 30,
+  },
+  subTitle: {
+    fontSize: 14,
+    textAlign: "center",
+    color: "#9D6C70",
+  },
+  form: {
+    marginTop: 30,
+    justifyContent: "center",
+  },
+  label: {
+    fontSize: 14,
+    marginBottom: 3,
+    color: "#33191A",
+  },
+  input: {
+    height: 46,
+    width: 300,
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 14,
+    fontSize: 14,
+  },
+  button: {
+    width: 160,
+    height: 46,
+    borderRadius: 10,
+    marginTop: 30,
+    alignSelf: "center",
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#DEDEE3",
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingVertical: 14,
   },
 });
 

@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import React from "react";
+import { useRoute } from "@react-navigation/native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import ListItem from "../../components/ListItem";
+import Header from "../../components/Header";
 // format-list-bulleted-square
 
 interface Params {
   loadingCode: number;
 }
 
-const CheckList = () => {
+const CheckList = (params: Params) => {
   const route = useRoute();
-  const navigation = useNavigation();
 
   const routeParams = route.params as Params;
 
@@ -21,15 +21,7 @@ const CheckList = () => {
 
   return (
     <View style={styles.main}>
-      <View style={styles.header}>
-        <RectButton style={styles.backLink} onPress={() => navigation.goBack()}>
-          <Icon name="chevron-double-left" size={24} color="#3D3D90" />
-          <Text style={styles.backLinkText}>Voltar</Text>
-        </RectButton>
-        <Text style={styles.codText}>
-          Cod.:<Text style={styles.loadingCode}> {loadingCode}</Text>
-        </Text>
-      </View>
+      <Header loadingCode={loadingCode} />
 
       <View style={styles.checkList}>
         <View style={styles.titleRow}>
@@ -59,28 +51,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 30,
     paddingHorizontal: 30,
-  },
-  header: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  backLink: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  backLinkText: {
-    color: "#3D3D90",
-  },
-  codText: {
-    fontSize: 14,
-    color: "#240F10",
-  },
-  loadingCode: {
-    color: "#D71F26",
-    fontWeight: "bold",
   },
   checkList: {
     marginTop: 30,

@@ -20,7 +20,7 @@ const Home = () => {
   const navigation = useNavigation();
   function handleNavigateToExample() {
     navigation.navigate("CheckList", {
-      hello: "CheckList screen",
+      loadingCode: loadingCode,
     });
   }
 
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 30,
+    paddingVertical: 30,
   },
   subTitle: {
     fontSize: 14,

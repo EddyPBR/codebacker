@@ -25,7 +25,7 @@ const CheckList = () => {
 
   return (
     <View style={styles.main}>
-      <Header loadingCode={loadingCode} />
+      <Header loadingCode={loadingCode} isWhite={false} />
 
       <View style={styles.checkList}>
         <View style={styles.titleRow}>

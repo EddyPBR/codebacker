@@ -6,6 +6,7 @@ import { RectButton } from "react-native-gesture-handler";
 
 interface Params {
   loadingCode: number;
+  isWhite: boolean;
 }
 
 const Header = (params: Params) => {
@@ -16,7 +17,20 @@ const Header = (params: Params) => {
 
   const { loadingCode } = routeParams;
 
-  return (
+  return params.isWhite ? (
+    <View style={styles.header}>
+      <RectButton
+        style={{ flexDirection: "row", alignItems: "center" }}
+        onPress={() => navigation.goBack()}>
+        <Icon name="chevron-double-left" size={24} color="#DEDEE3" />
+        <Text style={{ color: "#FFF" }}>Voltar</Text>
+      </RectButton>
+      <Text style={{ fontSize: 14, color: "#DEDEE3" }}>
+        Cod.:
+        <Text style={{ color: "#FFF", fontWeight: "bold" }}> {loadingCode}</Text>
+      </Text>
+    </View>
+  ) : (
     <View style={styles.header}>
       <RectButton
         style={{ flexDirection: "row", alignItems: "center" }}

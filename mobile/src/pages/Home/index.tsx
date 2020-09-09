@@ -18,7 +18,7 @@ const Home = () => {
   const [loadingCode, setLoadingCode] = useState("");
 
   const navigation = useNavigation();
-  function handleNavigateToExample() {
+  function handleNavigateToCheckList() {
     navigation.navigate("CheckList", {
       loadingCode: loadingCode,
     });
@@ -44,7 +44,7 @@ const Home = () => {
           keyboardType="number-pad"
         />
         <LinearGradient colors={["#E53035", "#BC151B"]} style={styles.button}>
-          <RectButton onPress={handleNavigateToExample}>
+          <RectButton onPress={handleNavigateToCheckList}>
             <Text style={styles.buttonText}>Ver Lista</Text>
           </RectButton>
         </LinearGradient>

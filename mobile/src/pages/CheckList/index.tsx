@@ -2,17 +2,21 @@ import React from "react";
 import { useRoute } from "@react-navigation/native";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { RectButton } from "react-native-gesture-handler";
-import { LinearGradient } from "expo-linear-gradient";
+
 import ListItem from "../../components/ListItem";
 import Header from "../../components/Header";
-// format-list-bulleted-square
+import SaveButton from "../../components/SaveButton";
+
+import Request from "../../services/requestExample";
 
 interface Params {
   loadingCode: number;
 }
 
-const CheckList = (params: Params) => {
+// only importing some data for tests
+const requests = Request;
+
+const CheckList = () => {
   const route = useRoute();
 
   const routeParams = route.params as Params;
@@ -25,21 +29,21 @@ const CheckList = (params: Params) => {
 
       <View style={styles.checkList}>
         <View style={styles.titleRow}>
-          <Icon name="format-list-bulleted-square" size={24} color="#240F10" style={{marginRight: 3}} />
+          <Icon
+            name="format-list-bulleted-square"
+            size={24}
+            color="#240F10"
+            style={{ marginRight: 3 }}
+          />
           <Text style={styles.title}>Lista de checagem</Text>
         </View>
         <ScrollView style={styles.boxList}>
-          <ListItem status="sucess" />
-          <ListItem status="fail" />
-          <ListItem status="" />
+          {requests.map( (request, index) => (
+            <ListItem data={request} loadingCode={loadingCode} key={index} />
+          ))}
         </ScrollView>
       </View>
-
-      <LinearGradient colors={["#2EB363", "#1E8F4B"]} style={styles.button}>
-        <RectButton onPress={() => alert("ok")}>
-          <Text style={styles.buttonText}>Ver Lista</Text>
-        </RectButton>
-      </LinearGradient>
+      <SaveButton />
     </View>
   );
 };
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignSelf: "flex-start",
     height: 380,
-    width: "100%"
+    width: "100%",
   },
   titleRow: {
     display: "flex",
@@ -67,20 +71,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: "#240F10",
-  },
-  button: {
-    width: 160,
-    height: 46,
-    borderRadius: 10,
-    marginTop: 30,
-    alignSelf: "center",
-  },
-  buttonText: {
-    fontSize: 16,
-    color: "#DEDEE3",
-    fontWeight: "bold",
-    textAlign: "center",
-    paddingVertical: 14,
   },
   boxList: {
     marginTop: 8,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -14,12 +14,25 @@ const requests = Request;
 
 const CheckList = () => {
   const [loadingCode, setLoadingCode] = useState("");
+  const [loadsList, setLoadsList] = useState([]);
 
   const getLoadingCode = async () => {
     const loadingCode = await AsyncStorage.getItem("@loadingCode");
-    return loadingCode ? setLoadingCode((loadingCode)) : ""
-  }
-  getLoadingCode();
+    return loadingCode ? setLoadingCode(loadingCode) : "";
+  };
+
+  const getLoadsList = async () => {
+    const loadsList = await AsyncStorage.getItem("@loadsList");
+    return loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
+  };
+
+  useEffect(() => {
+    getLoadingCode();
+  }, []);
+
+  useEffect(() => {
+    getLoadsList();
+  }, []);
 
   return (
     <View style={styles.main}>
@@ -36,7 +49,7 @@ const CheckList = () => {
           <Text style={styles.title}>Lista de checagem</Text>
         </View>
         <ScrollView style={styles.boxList}>
-          {requests.map( (request, index) => (
+          {requests.map((request, index) => (
             <ListItem data={request} loadingCode={loadingCode} key={index} />
           ))}
         </ScrollView>

@@ -11,22 +11,49 @@ import {
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-community/async-storage";
+import Request from "../../services/requestExample";
+import createVolumes from "../../utils/createVolumes";
 
 const codebacker = require("../../assets/Codebacker/codebacker.png");
 
 const Home = () => {
-
   const [loadingCode, setLoadingCode] = useState("");
 
   const navigation = useNavigation();
 
-  const storeData = async (key: string, value: string) => {
+  const storeUnicData = async (key: string, value: string) => {
     await AsyncStorage.setItem(key, value);
-  }
-  
+  };
+
+  const storeObjectData = async (key: string, object: object) => {
+    const jsonValue = JSON.stringify(object);
+    await AsyncStorage.setItem(key, jsonValue);
+  };
+
   async function handleNavigateToCheckList() {
-    storeData("@loadingCode", loadingCode);
+    const loads = Request; // will be a async function to acess the Database
+
+    const newLoads = loads.map((loadData) => {
+      const { NUMCAR, NUMPED, NUMVOLUME, OS, VEICULO } = loadData;
+
+      const volumes = createVolumes(NUMVOLUME);
+
+      const newLoad = {
+        codOS: OS,
+        carNumber: NUMCAR,
+        requestNumber: NUMPED,
+        vehicle: VEICULO,
+        volumes: volumes,
+        status: "unchecked",
+      };
+
+      return newLoad;
+    });
+
+    await storeObjectData("@loadsList", newLoads);
+    await storeUnicData("@loadingCode", loadingCode);
+
     navigation.navigate("CheckList");
   }
 

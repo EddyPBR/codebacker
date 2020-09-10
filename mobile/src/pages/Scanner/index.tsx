@@ -4,7 +4,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 
 const CheckList = () => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState(true);
 
   useEffect(() => {
     (async () => {

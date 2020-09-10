@@ -5,19 +5,15 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { RectButton } from "react-native-gesture-handler";
 
 interface Params {
-  loadingCode: number;
+  loadingCode: number | string;
   isWhite: boolean;
 }
 
 const Header = (params: Params) => {
-  const route = useRoute();
+  const { isWhite, loadingCode } = params;
   const navigation = useNavigation();
 
-  const routeParams = route.params as Params;
-
-  const { loadingCode } = routeParams;
-
-  return params.isWhite ? (
+  return isWhite ? (
     <View style={styles.header}>
       <RectButton
         style={{ flexDirection: "row", alignItems: "center" }}

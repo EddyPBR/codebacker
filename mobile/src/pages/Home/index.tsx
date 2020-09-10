@@ -11,17 +11,23 @@ import {
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from '@react-native-community/async-storage';
 
 const codebacker = require("../../assets/Codebacker/codebacker.png");
 
 const Home = () => {
+
   const [loadingCode, setLoadingCode] = useState("");
 
   const navigation = useNavigation();
-  function handleNavigateToCheckList() {
-    navigation.navigate("CheckList", {
-      loadingCode: loadingCode,
-    });
+
+  const storeData = async (key: string, value: string) => {
+    await AsyncStorage.setItem(key, value);
+  }
+  
+  async function handleNavigateToCheckList() {
+    storeData("@loadingCode", loadingCode);
+    navigation.navigate("CheckList");
   }
 
   return (
@@ -49,7 +55,6 @@ const Home = () => {
           </RectButton>
         </LinearGradient>
       </View>
-      
     </KeyboardAvoidingView>
   );
 };

@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 interface Params {
   data: object;
-  loadingCode: number;
+  loadingCode: number | string;
 }
 
 interface Data {

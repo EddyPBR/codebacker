@@ -74,6 +74,7 @@ const ScannBox = () => {
           </View>
         </RectButton>
       </LinearGradient>
+      
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -8,20 +8,18 @@ import Header from "../../components/Header";
 import SaveButton from "../../components/SaveButton";
 
 import Request from "../../services/requestExample";
-
-interface Params {
-  loadingCode: number;
-}
-
+import AsyncStorage from "@react-native-community/async-storage";
 // only importing some data for tests
 const requests = Request;
 
 const CheckList = () => {
-  const route = useRoute();
+  const [loadingCode, setLoadingCode] = useState("");
 
-  const routeParams = route.params as Params;
-
-  const { loadingCode } = routeParams;
+  const getLoadingCode = async () => {
+    const loadingCode = await AsyncStorage.getItem("@loadingCode");
+    return loadingCode ? setLoadingCode((loadingCode)) : ""
+  }
+  getLoadingCode();
 
   return (
     <View style={styles.main}>

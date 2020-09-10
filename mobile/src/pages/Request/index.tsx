@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, TextInput } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 import Header from "../../components/Header";
@@ -7,43 +7,53 @@ import ScannBox from "../../components/ScannBox";
 import SaveButton from "../../components/SaveButton";
 
 interface Data {
-  numCar: number;
-  numPed: number;
-  numVolume: number;
-  codOs: number;
-  veiculo: number;
-  status: string;
-  loadingCode: number;
-}
+  codOS: string,
+  carNumber: string,
+  requestNumber: string,
+  vehicle: string,
+  volumes: Array<object>,
+  status: string,
+  loadingCode: string,
+};
 
 const Request = () => {
   const route = useRoute();
   const routeParams = route.params as Data;
 
-  const { numCar, numPed, numVolume, codOs, veiculo, status, loadingCode } = routeParams;
+  const { carNumber, requestNumber, volumes, codOS, vehicle, status, loadingCode } = routeParams;
+
+  const numberOfVolumes = volumes.length;
+
   return (
     <>
       <View style={styles.main}>
         <Header loadingCode={loadingCode} isWhite />
         <View style={styles.mainBody}>
           <Text style={styles.mainTitle}>Pedido</Text>
-          <Text style={styles.mainTitle}>{numPed}</Text>
+          <Text style={styles.mainTitle}>{requestNumber}</Text>
         </View>
         <View style={styles.mainFooter}>
           <View style={styles.mainDetails}>
-            <Text style={styles.detailsText}>OS: {codOs}</Text>
-            <Text style={styles.detailsText}>Veículo: {veiculo}</Text>
+            <Text style={styles.detailsText}>OS: {codOS}</Text>
+            <Text style={styles.detailsText}>Veículo: {vehicle}</Text>
           </View>
-          <Text style={styles.mainPackages}>Pedidos: 0/{numVolume}</Text>
+          <Text style={styles.mainPackages}>Checados: 0/{numberOfVolumes}</Text>
         </View>
       </View>
 
       <View>
         <ScrollView style={styles.scannList} horizontal={true}>
-          <ScannBox />
-          <ScannBox />
-          <ScannBox />
-          <ScannBox />
+          {volumes.map((volume, index) => {            
+            const dataObject = {
+              codOS: codOS,
+              carNumber: carNumber,
+              index: index + 1,
+              numberOfVolumes: numberOfVolumes,
+              status:status,
+            }
+
+            return (<ScannBox data={dataObject} key={index} /> );
+          })}
         </ScrollView>
         <SaveButton />
       </View>

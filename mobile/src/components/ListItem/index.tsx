@@ -9,26 +9,26 @@ interface Params {
 }
 
 interface Data {
-  numCar: number;
-  numPed: number;
-  numVolume: number;
-  codOs: number;
-  veiculo: number;
-  status: string;
-}
+  codOS: string,
+  carNumber: string,
+  requestNumber: string,
+  vehicle: string,
+  volumes: Array<object>,
+  status: string,
+};
 
 const ListItem = (params: Params) => {
-  const { numCar, numPed, numVolume, codOs, veiculo, status } = params.data as Data;
+  const { codOS, carNumber, requestNumber, vehicle, volumes, status } = params.data as Data;
   const loadingCode = params.loadingCode;
 
   const navigation = useNavigation();
   function handleNavigateToRequest() {
     navigation.navigate("Request", {
-      numCar,
-      numPed,
-      numVolume,
-      codOs,
-      veiculo,
+      codOS,
+      carNumber,
+      requestNumber,
+      vehicle,
+      volumes,
       status,
       loadingCode: loadingCode,
     });
@@ -40,7 +40,7 @@ const ListItem = (params: Params) => {
       <TouchableOpacity style={styles.checkContentSucess} activeOpacity={0.75} onPress={handleNavigateToRequest}>
         <FeatherIcons name="check-circle" size={24} color="#2EB363" style={styles.icon} />
         <Text style={styles.text}>Pedido:</Text>
-        <Text style={styles.code}>{numPed}</Text>
+        <Text style={styles.code}>{requestNumber}</Text>
       </TouchableOpacity>
     );
   }
@@ -50,7 +50,7 @@ const ListItem = (params: Params) => {
       <TouchableOpacity style={styles.checkContentFail} activeOpacity={0.75} onPress={handleNavigateToRequest}>
         <FeatherIcons name="x-circle" size={24} color="#E53035" style={styles.icon} />
         <Text style={styles.text}>Pedido:</Text>
-        <Text style={styles.code}>{numPed}</Text>
+        <Text style={styles.code}>{requestNumber}</Text>
       </TouchableOpacity>
     );
   }
@@ -59,7 +59,7 @@ const ListItem = (params: Params) => {
     <TouchableOpacity style={styles.checkContent} activeOpacity={0.75} onPress={handleNavigateToRequest}>
       <FeatherIcons name="info" size={24} color="#898383" style={styles.icon} />
       <Text style={styles.text}>Pedido:</Text>
-      <Text style={styles.code}>{numPed}</Text>
+      <Text style={styles.code}>{requestNumber}</Text>
     </TouchableOpacity>
   );
 };

@@ -4,7 +4,22 @@ import FeatherIcons from "react-native-vector-icons/Feather";
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 
-const ScannBox = () => {
+interface Data {
+  codOS: string;
+  carNumber: string;
+  index: number;
+  numberOfVolumes: number,
+  status: string;
+};
+
+interface Params {
+  data: object;
+}
+
+const ScannBox = (params: Params) => {
+  const { codOS, carNumber, index, numberOfVolumes, status} = params.data as Data;
+  const productCode = "000" + codOS;
+  
   return (
     <View style={styles.scannBox}>
       <View style={styles.boxHeader}>
@@ -12,7 +27,7 @@ const ScannBox = () => {
           <Text style={styles.boxHeaderText}>Status:</Text>
           <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />
         </View>
-        <Text style={styles.boxHeaderText}>Pacote 0 de {"0"}</Text>
+        <Text style={styles.boxHeaderText}>Pacote {index} de {numberOfVolumes}</Text>
       </View>
 
       <View style={styles.boxBody}>
@@ -26,7 +41,7 @@ const ScannBox = () => {
               placeholderTextColor="#898383"
               contextMenuHidden={true}
               editable={false}>
-              821471902
+              {productCode}
             </TextInput>
           </View>
           <View style={styles.bodyField}>
@@ -50,7 +65,7 @@ const ScannBox = () => {
               contextMenuHidden={true}
               editable={false}
               placeholderTextColor="#898383">
-              821471902
+                {carNumber}
             </TextInput>
           </View>
           <View style={styles.bodyField}>

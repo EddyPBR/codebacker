@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 import FeatherIcons from "react-native-vector-icons/Feather";
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 interface Data {
   codOS: string;
@@ -19,6 +20,12 @@ interface Params {
 const ScannBox = (params: Params) => {
   const { codOS, carNumber, index, numberOfVolumes, status} = params.data as Data;
   const productCode = "000" + codOS;
+
+  const navigation = useNavigation();
+
+  function handleNavigateToScann() {
+    navigation.navigate("Scanner");
+  }
   
   return (
     <View style={styles.scannBox}>
@@ -82,7 +89,7 @@ const ScannBox = (params: Params) => {
       </View>
 
       <LinearGradient colors={["#E53035", "#BC151B"]} style={styles.button}>
-        <RectButton onPress={() => alert("ihu")}>
+        <RectButton onPress={() => handleNavigateToScann()}>
           <View style={styles.buttonRow}>
             <FeatherIcons name="camera" size={18} color="#DEDEE3" style={{ marginRight: 8 }} />
             <Text style={styles.buttonText}>Escanear</Text>

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   checkList: {
     marginTop: 30,
     alignSelf: "flex-start",
-    height: 380,
+    height: 350,
     width: "100%",
   },
   titleRow: {

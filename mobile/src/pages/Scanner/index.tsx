@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import SaveButton from "../../components/SaveButton";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { RectButton } from "react-native-gesture-handler";
 
+import SaveButton from "../../components/SaveButton";
+
 const CheckList = () => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
+  const [hasPermission, setHasPermission] = useState(Boolean);
+  const [scanned, setScanned] = useState(true);
 
   const trulyProductCode = "7898644881023";
   const trulyCarCode = "7894537020678";
   const [productCod, setProductCode] = useState("");
-  const [carCod, setCarCode] = useState("7894537020678");
+  const [carCod, setCarCode] = useState("");
   const [typeToScan, setTypeToScan] = useState("");
-
-  // needs remove it
-  useEffect(() => {
-    setScanned(false);
-  }, []);
 
   useEffect(() => {
     (async () => {
@@ -28,7 +24,12 @@ const CheckList = () => {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = ({ type, data }: any) => {
+
+    if (scanned === true) {
+      return;
+    }
+
     setScanned(true);
 
     if (typeToScan === "product") {
@@ -38,7 +39,7 @@ const CheckList = () => {
       setCarCode(data);
       alert(`Produto escaneado! \ncódigo obtido: ${data}`);
     } else {
-      alert("Houve um pequeno erro no momento do scann, tente novamente por favor.");
+      alert("Houve um pequeno erro no momento do scann, por favor tente novamente.");
     }
 
     setTypeToScan("");
@@ -59,10 +60,9 @@ const CheckList = () => {
   return (
     <View style={styles.main}>
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={handleBarCodeScanned}
         style={styles.scann}
       />
-      {/* {scanned && <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />} */}
 
       {typeToScan === "" && (
         <View
@@ -156,7 +156,8 @@ const CheckList = () => {
                 autoCorrect={false}
                 placeholderTextColor="#E53035"
                 contextMenuHidden={true}
-                keyboardType="number-pad">
+                keyboardType="number-pad"
+                editable={false}>
                 {productCod}
               </TextInput>
             ) : (
@@ -165,7 +166,8 @@ const CheckList = () => {
                 autoCorrect={false}
                 placeholderTextColor="#E53035"
                 contextMenuHidden={true}
-                keyboardType="number-pad">
+                keyboardType="number-pad"
+                editable={false}>
                 {productCod}
               </TextInput>
             )}
@@ -193,7 +195,8 @@ const CheckList = () => {
                 autoCorrect={false}
                 placeholderTextColor="#E53035"
                 contextMenuHidden={true}
-                keyboardType="number-pad">
+                keyboardType="number-pad"
+                editable={false}>
                 {carCod}
               </TextInput>
             ) : (
@@ -202,7 +205,8 @@ const CheckList = () => {
                 autoCorrect={false}
                 placeholderTextColor="#E53035"
                 contextMenuHidden={true}
-                keyboardType="number-pad">
+                keyboardType="number-pad"
+                editable={false}>
                 {carCod}
               </TextInput>
             )}

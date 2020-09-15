@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 import Header from "../../components/Header";
 import ScannBox from "../../components/ScannBox";
 import SaveButton from "../../components/SaveButton";
+
+import AsyncStorage from "@react-native-community/async-storage";
+import { useFocusEffect } from '@react-navigation/native';
+
+interface Params {
+  requestNumber: string;
+}
 
 interface Data {
   codOS: string;
@@ -16,26 +23,52 @@ interface Data {
     status: string;
   }>;
   status: string;
-  loadingCode: string;
+}
+
+interface RequestedLoad {
+  codOS: string;
+  vehicle: string;
+  carNumber: string;
+  status: string;
+  volumes: [{
+    numVolume: string;
+    status: string;
+  }];
 }
 
 const Request = () => {
+  const [loadingCode, setLoadingCode] = useState("");
+  const [loadsList, setLoadsList] = useState([]);
+
   const route = useRoute();
+  const { requestNumber } = route.params as Params;
 
-  const {
-    carNumber,
-    requestNumber,
-    volumes,
-    codOS,
-    vehicle,
-    status,
-    loadingCode,
-  } = route.params as Data;
+  const getLoadingCode = async () => {
+    const loadingCode = await AsyncStorage.getItem("@loadingCode");
+    return loadingCode ? setLoadingCode(loadingCode) : "";
+  };
 
-  const numberOfVolumes = volumes.length;
+  const getLoadsList = async () => {
+    const loadsList = await AsyncStorage.getItem("@loadsList");
+    return loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getLoadingCode();
+      getLoadsList();
+    }, [])
+  );
+
+  const getRequestedLoad = () => {
+    const load = loadsList.filter((load: Data) => load.requestNumber == String(requestNumber));
+  }
+
+  // const { codOS, vehicle, carNumber, status, volumes } = requestedLoad as RequestedLoad;
+  // const numberOfVolumes = volumes.lenght();
 
   return (
-    <>
+    <>  
       <View style={styles.main}>
         <Header loadingCode={loadingCode} isWhite />
         <View style={styles.mainBody}>
@@ -44,16 +77,16 @@ const Request = () => {
         </View>
         <View style={styles.mainFooter}>
           <View style={styles.mainDetails}>
-            <Text style={styles.detailsText}>OS: {codOS}</Text>
-            <Text style={styles.detailsText}>Veículo: {vehicle}</Text>
+            {/* <Text style={styles.detailsText}>OS: {codOS}</Text> */}
+            {/* <Text style={styles.detailsText}>Veículo: {vehicle}</Text> */}
           </View>
-          <Text style={styles.mainPackages}>Checados: 0/{numberOfVolumes}</Text>
+          {/* <Text style={styles.mainPackages}>Checados: 0/{numberOfVolumes}</Text> */}
         </View>
       </View>
 
       <View>
         <ScrollView style={styles.scannList} horizontal={true}>
-          {volumes.map((volume, index) => {
+          {/* {volumes.map((volume, index) => {
             const dataObject = {
               requestNumber,
               codOS,
@@ -65,7 +98,7 @@ const Request = () => {
             };
 
             return <ScannBox data={dataObject} key={index} />;
-          })}
+          })} */}
         </ScrollView>
         <SaveButton />
       </View>

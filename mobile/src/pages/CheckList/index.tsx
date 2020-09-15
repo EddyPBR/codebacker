@@ -46,7 +46,7 @@ const CheckList = () => {
         </View>
         <ScrollView style={styles.boxList}>
           {loadsList.map((load, index) => (
-            <ListItem data={load} loadingCode={loadingCode} key={index} />
+            <ListItem data={load} key={index} />
           ))}
         </ScrollView>
       </View>

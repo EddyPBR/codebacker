@@ -4,36 +4,22 @@ import FeatherIcons from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 
 interface Data {
-  codOS: string;
-  carNumber: string;
   requestNumber: string;
-  vehicle: string;
-  volumes: Array<{
-    numVolume: string;
-    status: string;
-  }>;
   status: string;
 }
 
 interface Params {
   data: Data;
-  loadingCode: number | string;
 }
 
 const ListItem = (params: Params) => {
-  const { codOS, carNumber, requestNumber, vehicle, volumes, status } = params.data as Data;
-  const loadingCode = params.loadingCode;
+  const { requestNumber, status } = params.data as Data;
 
   const navigation = useNavigation();
-  function handleNavigateToRequest() {
+
+  function handleNavitigateToRequest() {
     navigation.navigate("Request", {
-      codOS,
-      carNumber,
-      requestNumber,
-      vehicle,
-      volumes,
-      status,
-      loadingCode,
+      requestNumber
     });
   }
 
@@ -42,7 +28,7 @@ const ListItem = (params: Params) => {
       <TouchableOpacity
         style={styles.checkContentSucess}
         activeOpacity={0.75}
-        onPress={handleNavigateToRequest}>
+        onPress={handleNavitigateToRequest}>
         <FeatherIcons name="check-circle" size={24} color="#2EB363" style={styles.icon} />
         <Text style={styles.text}>Pedido:</Text>
         <Text style={styles.code}>{requestNumber}</Text>
@@ -55,7 +41,7 @@ const ListItem = (params: Params) => {
       <TouchableOpacity
         style={styles.checkContentFail}
         activeOpacity={0.75}
-        onPress={handleNavigateToRequest}>
+        onPress={handleNavitigateToRequest}>
         <FeatherIcons name="x-circle" size={24} color="#E53035" style={styles.icon} />
         <Text style={styles.text}>Pedido:</Text>
         <Text style={styles.code}>{requestNumber}</Text>
@@ -67,7 +53,7 @@ const ListItem = (params: Params) => {
     <TouchableOpacity
       style={styles.checkContent}
       activeOpacity={0.75}
-      onPress={handleNavigateToRequest}>
+      onPress={handleNavitigateToRequest}>
       <FeatherIcons name="info" size={24} color="#898383" style={styles.icon} />
       <Text style={styles.text}>Pedido:</Text>
       <Text style={styles.code}>{requestNumber}</Text>

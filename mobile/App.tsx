@@ -1,6 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 
+import { enableScreens } from 'react-native-screens';
+
 import Routes from "./src/routes";
 
 // import React, { useEffect } from 'react';
@@ -21,7 +23,7 @@ export default function App() {
 
   //   // now execute the command: yarn android --configuration Release
   // }, []);
-
+  enableScreens();
   return (
     <>
       <StatusBar

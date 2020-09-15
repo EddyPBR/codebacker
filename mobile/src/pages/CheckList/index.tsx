@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -6,10 +6,8 @@ import ListItem from "../../components/ListItem";
 import Header from "../../components/Header";
 import SaveButton from "../../components/SaveButton";
 
-import Request from "../../services/requestExample";
 import AsyncStorage from "@react-native-community/async-storage";
-// only importing some data for tests
-const requests = Request;
+import { useFocusEffect } from '@react-navigation/native'
 
 const CheckList = () => {
   const [loadingCode, setLoadingCode] = useState("");
@@ -25,13 +23,12 @@ const CheckList = () => {
     return loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
   };
 
-  useEffect(() => {
-    getLoadingCode();
-  }, []);
-
-  useEffect(() => {
-    getLoadsList();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getLoadingCode();
+      getLoadsList();
+    }, [])
+  );
 
   return (
     <View style={styles.main}>

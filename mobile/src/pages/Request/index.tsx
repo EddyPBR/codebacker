@@ -45,11 +45,13 @@ const Request = () => {
         <ScrollView style={styles.scannList} horizontal={true}>
           {volumes.map((volume, index) => {            
             const dataObject = {
-              codOS: codOS,
-              carNumber: carNumber,
-              index: index + 1,
-              numberOfVolumes: numberOfVolumes,
-              status:status,
+              requestNumber,
+              codOS,
+              carNumber,
+              numberOfVolumes,
+              status,
+              index,
+              volume
             }
 
             return (<ScannBox data={dataObject} key={index} /> );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -10,13 +10,13 @@ import SaveButton from "../../components/SaveButton";
 const CheckList = () => {
   const [hasPermission, setHasPermission] = useState(Boolean);
   const [scanned, setScanned] = useState(true);
+  const [typeToScan, setTypeToScan] = useState("");
 
   const trulyProductCode = "7898644881023";
   const trulyCarCode = "7894537020678";
   const [productCod, setProductCode] = useState("");
   const [carCod, setCarCode] = useState("");
-  const [typeToScan, setTypeToScan] = useState("");
-
+  
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -56,6 +56,17 @@ const CheckList = () => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+  // function handleSaveState() {
+  //   const status = trulyCarCode === carCod && trulyProductCode === productCod ? "sucess" : "fail";
+
+  //   const newVolume = {
+  //     status,
+  //     // numVolume
+  //   }
+
+  //   // create function to save a object on storage
+  // }
 
   return (
     <View style={styles.main}>
@@ -213,6 +224,8 @@ const CheckList = () => {
           </View>
         </View>
       </View>
+
+      {/* <Button title="Salvar" color="#2EB363"onPress={handleSaveState} /> */}
 
       {/* <SaveButton /> */}
     </View>

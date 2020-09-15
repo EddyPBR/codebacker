@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useRoute } from "@react-navigation/native";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 

@@ -9,8 +9,13 @@ interface Data {
   codOS: string;
   carNumber: string;
   index: number;
-  numberOfVolumes: number,
+  numberOfVolumes: number;
   status: string;
+  requestNumber: string;
+  volume: {
+    numVolume: string;
+    status: string;
+  }
 };
 
 interface Params {
@@ -18,8 +23,8 @@ interface Params {
 }
 
 const ScannBox = (params: Params) => {
-  const { codOS, carNumber, index, numberOfVolumes, status} = params.data as Data;
-  const productCode = "000" + codOS;
+  const { codOS, carNumber, index, numberOfVolumes, status, requestNumber, volume} = params.data as Data;
+  const productCode = "000" + codOS + volume.numVolume;
 
   const navigation = useNavigation();
 

@@ -15,15 +15,15 @@ interface Data {
   volume: {
     numVolume: string;
     status: string;
-  }
-};
+  };
+}
 
 interface Params {
-  data: object;
+  data: Data;
 }
 
 const ScannBox = (params: Params) => {
-  const { codOS, carNumber, index, numberOfVolumes, status, requestNumber, volume} = params.data as Data;
+  const { codOS, carNumber, index, numberOfVolumes, status, requestNumber, volume } = params.data;
 
   const productCode = "000" + codOS + volume.numVolume;
 
@@ -35,10 +35,10 @@ const ScannBox = (params: Params) => {
       productCode,
       carNumber,
       volume,
-      index
+      index,
     });
   }
-  
+
   return (
     <View style={styles.scannBox}>
       <View style={styles.boxHeader}>
@@ -47,7 +47,9 @@ const ScannBox = (params: Params) => {
           {/* need create a conditional to change the icon */}
           <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />
         </View>
-        <Text style={styles.boxHeaderText}>Pacote {index + 1} de {numberOfVolumes}</Text>
+        <Text style={styles.boxHeaderText}>
+          Pacote {index + 1} de {numberOfVolumes}
+        </Text>
       </View>
 
       <View style={styles.boxBody}>
@@ -85,7 +87,7 @@ const ScannBox = (params: Params) => {
               contextMenuHidden={true}
               editable={false}
               placeholderTextColor="#898383">
-                {carNumber}
+              {carNumber}
             </TextInput>
           </View>
           <View style={styles.bodyField}>
@@ -109,7 +111,6 @@ const ScannBox = (params: Params) => {
           </View>
         </RectButton>
       </LinearGradient>
-      
     </View>
   );
 };

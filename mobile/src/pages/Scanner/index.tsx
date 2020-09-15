@@ -18,10 +18,6 @@ interface Data {
     status: string;
   };
   index: number;
-};
-
-interface Params {
-  data: object;
 }
 
 const CheckList = () => {
@@ -48,7 +44,7 @@ const CheckList = () => {
   useEffect(() => {
     getLoadsList();
   }, []);
-  
+
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -57,7 +53,6 @@ const CheckList = () => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }: any) => {
-
     if (scanned === true) {
       return;
     }
@@ -90,20 +85,25 @@ const CheckList = () => {
     const newVolume = {
       numVolume: volume.numVolume,
       status,
-    }
+    };
 
     requestedLoad[index] = newVolume;
 
-    const newLoadsList = loadsList.map((load) => load.requestNumber === requestNumber ? load.volumes = requestedLoad : load);
-    setLoadsList(newLoadsList)
+    const newLoadsList = loadsList.map((load) =>
+      load.requestNumber === requestNumber ? (load.volumes = requestedLoad) : load
+    );
+    setLoadsList(newLoadsList);
 
     // create function to save a object on storage
     const storeData = async (key, value) => {
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem(key, jsonValue)
-    }
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem(key, jsonValue);
+    };
 
-    const newNewLoadsList = loadsList.map((load) => { load.status = "sucess"; return load } );
+    const newNewLoadsList = loadsList.map((load) => {
+      load.status = "sucess";
+      return load;
+    });
 
     storeData("@loadsList", newNewLoadsList);
     navigation.goBack();
@@ -119,10 +119,7 @@ const CheckList = () => {
 
   return (
     <View style={styles.main}>
-      <BarCodeScanner
-        onBarCodeScanned={handleBarCodeScanned}
-        style={styles.scann}
-      />
+      <BarCodeScanner onBarCodeScanned={handleBarCodeScanned} style={styles.scann} />
 
       {typeToScan === "" && (
         <View
@@ -209,7 +206,7 @@ const CheckList = () => {
             </TextInput>
           </View>
           <View style={styles.field}>
-          <Text style={styles.label}>Cód. obtido</Text>
+            <Text style={styles.label}>Cód. obtido</Text>
             {trulyProductCode === productCod ? (
               <TextInput
                 style={styles.inputSucess}
@@ -274,7 +271,7 @@ const CheckList = () => {
         </View>
       </View>
 
-      <Button title="Salvar" color="#2EB363"onPress={handleSaveState} />
+      <Button title="Salvar" color="#2EB363" onPress={handleSaveState} />
 
       {/* <SaveButton /> */}
     </View>
@@ -356,7 +353,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
 });
 
 export default CheckList;

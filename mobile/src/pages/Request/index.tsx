@@ -7,19 +7,30 @@ import ScannBox from "../../components/ScannBox";
 import SaveButton from "../../components/SaveButton";
 
 interface Data {
-  codOS: string,
-  carNumber: string,
-  requestNumber: string,
-  vehicle: string,
-  volumes: Array<object>,
-  status: string,
-  loadingCode: string,
-};
+  codOS: string;
+  carNumber: string;
+  requestNumber: string;
+  vehicle: string;
+  volumes: Array<{
+    numVolume: string;
+    status: string;
+  }>;
+  status: string;
+  loadingCode: string;
+}
 
 const Request = () => {
   const route = useRoute();
-  
-  const { carNumber, requestNumber, volumes, codOS, vehicle, status, loadingCode } = route.params as Data;
+
+  const {
+    carNumber,
+    requestNumber,
+    volumes,
+    codOS,
+    vehicle,
+    status,
+    loadingCode,
+  } = route.params as Data;
 
   const numberOfVolumes = volumes.length;
 
@@ -42,7 +53,7 @@ const Request = () => {
 
       <View>
         <ScrollView style={styles.scannList} horizontal={true}>
-          {volumes.map((volume, index) => {            
+          {volumes.map((volume, index) => {
             const dataObject = {
               requestNumber,
               codOS,
@@ -50,10 +61,10 @@ const Request = () => {
               numberOfVolumes,
               status,
               index,
-              volume
-            }
+              volume,
+            };
 
-            return (<ScannBox data={dataObject} key={index} /> );
+            return <ScannBox data={dataObject} key={index} />;
           })}
         </ScrollView>
         <SaveButton />

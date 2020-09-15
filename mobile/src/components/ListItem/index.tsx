@@ -3,19 +3,22 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import FeatherIcons from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 
-interface Params {
-  data: object;
-  loadingCode: number | string;
+interface Data {
+  codOS: string;
+  carNumber: string;
+  requestNumber: string;
+  vehicle: string;
+  volumes: Array<{
+    numVolume: string;
+    status: string;
+  }>;
+  status: string;
 }
 
-interface Data {
-  codOS: string,
-  carNumber: string,
-  requestNumber: string,
-  vehicle: string,
-  volumes: Array<object>,
-  status: string,
-};
+interface Params {
+  data: Data;
+  loadingCode: number | string;
+}
 
 const ListItem = (params: Params) => {
   const { codOS, carNumber, requestNumber, vehicle, volumes, status } = params.data as Data;
@@ -33,11 +36,13 @@ const ListItem = (params: Params) => {
       loadingCode,
     });
   }
-  
 
   if (status === "sucess") {
     return (
-      <TouchableOpacity style={styles.checkContentSucess} activeOpacity={0.75} onPress={handleNavigateToRequest}>
+      <TouchableOpacity
+        style={styles.checkContentSucess}
+        activeOpacity={0.75}
+        onPress={handleNavigateToRequest}>
         <FeatherIcons name="check-circle" size={24} color="#2EB363" style={styles.icon} />
         <Text style={styles.text}>Pedido:</Text>
         <Text style={styles.code}>{requestNumber}</Text>
@@ -47,7 +52,10 @@ const ListItem = (params: Params) => {
 
   if (status === "fail") {
     return (
-      <TouchableOpacity style={styles.checkContentFail} activeOpacity={0.75} onPress={handleNavigateToRequest}>
+      <TouchableOpacity
+        style={styles.checkContentFail}
+        activeOpacity={0.75}
+        onPress={handleNavigateToRequest}>
         <FeatherIcons name="x-circle" size={24} color="#E53035" style={styles.icon} />
         <Text style={styles.text}>Pedido:</Text>
         <Text style={styles.code}>{requestNumber}</Text>
@@ -56,7 +64,10 @@ const ListItem = (params: Params) => {
   }
 
   return (
-    <TouchableOpacity style={styles.checkContent} activeOpacity={0.75} onPress={handleNavigateToRequest}>
+    <TouchableOpacity
+      style={styles.checkContent}
+      activeOpacity={0.75}
+      onPress={handleNavigateToRequest}>
       <FeatherIcons name="info" size={24} color="#898383" style={styles.icon} />
       <Text style={styles.text}>Pedido:</Text>
       <Text style={styles.code}>{requestNumber}</Text>

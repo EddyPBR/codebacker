@@ -30,7 +30,7 @@ const ListItem = (params: Params) => {
       vehicle,
       volumes,
       status,
-      loadingCode: loadingCode,
+      loadingCode,
     });
   }
   

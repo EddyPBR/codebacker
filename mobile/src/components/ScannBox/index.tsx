@@ -24,12 +24,19 @@ interface Params {
 
 const ScannBox = (params: Params) => {
   const { codOS, carNumber, index, numberOfVolumes, status, requestNumber, volume} = params.data as Data;
+
   const productCode = "000" + codOS + volume.numVolume;
 
   const navigation = useNavigation();
 
   function handleNavigateToScann() {
-    navigation.navigate("Scanner");
+    navigation.navigate("Scanner", {
+      requestNumber,
+      productCode,
+      carNumber,
+      volume,
+      index
+    });
   }
   
   return (
@@ -37,9 +44,10 @@ const ScannBox = (params: Params) => {
       <View style={styles.boxHeader}>
         <View style={styles.statusRow}>
           <Text style={styles.boxHeaderText}>Status:</Text>
+          {/* need create a conditional to change the icon */}
           <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />
         </View>
-        <Text style={styles.boxHeaderText}>Pacote {index} de {numberOfVolumes}</Text>
+        <Text style={styles.boxHeaderText}>Pacote {index + 1} de {numberOfVolumes}</Text>
       </View>
 
       <View style={styles.boxBody}>

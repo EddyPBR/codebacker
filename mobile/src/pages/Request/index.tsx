@@ -18,9 +18,8 @@ interface Data {
 
 const Request = () => {
   const route = useRoute();
-  const routeParams = route.params as Data;
-
-  const { carNumber, requestNumber, volumes, codOS, vehicle, status, loadingCode } = routeParams;
+  
+  const { carNumber, requestNumber, volumes, codOS, vehicle, status, loadingCode } = route.params as Data;
 
   const numberOfVolumes = volumes.length;
 

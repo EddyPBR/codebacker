@@ -6,16 +6,48 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { RectButton } from "react-native-gesture-handler";
 
 import SaveButton from "../../components/SaveButton";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+interface Data {
+  requestNumber: string;
+  productCode: string;
+  carNumber: string;
+  volume: {
+    numVolume: string;
+    status: string;
+  };
+  index: number;
+};
+
+interface Params {
+  data: object;
+}
 
 const CheckList = () => {
+  const route = useRoute();
+  const { requestNumber, productCode, carNumber, volume, index } = route.params as Data;
+
   const [hasPermission, setHasPermission] = useState(Boolean);
   const [scanned, setScanned] = useState(true);
   const [typeToScan, setTypeToScan] = useState("");
 
-  const trulyProductCode = "7898644881023";
-  const trulyCarCode = "7894537020678";
+  const trulyProductCode = "7898644881023"; // productCode
+  const trulyCarCode = "7894537020678"; // carNumber
   const [productCod, setProductCode] = useState("");
   const [carCod, setCarCode] = useState("");
+
+  const [loadsList, setLoadsList] = useState([]);
+  const navigation = useNavigation();
+
+  const getLoadsList = async () => {
+    const loadsList = await AsyncStorage.getItem("@loadsList");
+    return loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
+  };
+
+  useEffect(() => {
+    getLoadsList();
+  }, []);
   
   useEffect(() => {
     (async () => {
@@ -50,23 +82,40 @@ const CheckList = () => {
     setTypeToScan(type);
   }
 
+  function handleSaveState() {
+    const status = trulyCarCode === carCod && trulyProductCode === productCod ? "sucess" : "fail";
+
+    const requestedLoad = loadsList.filter((load) => load.requestNumber === requestNumber);
+
+    const newVolume = {
+      numVolume: volume.numVolume,
+      status,
+    }
+
+    requestedLoad[index] = newVolume;
+
+    const newLoadsList = loadsList.map((load) => load.requestNumber === requestNumber ? load.volumes = requestedLoad : load);
+    setLoadsList(newLoadsList)
+
+    // create function to save a object on storage
+    const storeData = async (key, value) => {
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem(key, jsonValue)
+    }
+
+    const newNewLoadsList = loadsList.map((load) => { load.status = "sucess"; return load } );
+
+    storeData("@loadsList", newNewLoadsList);
+    navigation.goBack();
+  }
+
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
+
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-
-  // function handleSaveState() {
-  //   const status = trulyCarCode === carCod && trulyProductCode === productCod ? "sucess" : "fail";
-
-  //   const newVolume = {
-  //     status,
-  //     // numVolume
-  //   }
-
-  //   // create function to save a object on storage
-  // }
 
   return (
     <View style={styles.main}>
@@ -225,7 +274,7 @@ const CheckList = () => {
         </View>
       </View>
 
-      {/* <Button title="Salvar" color="#2EB363"onPress={handleSaveState} /> */}
+      <Button title="Salvar" color="#2EB363"onPress={handleSaveState} />
 
       {/* <SaveButton /> */}
     </View>

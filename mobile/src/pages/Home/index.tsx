@@ -124,6 +124,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 30,
     alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.33,
+    shadowRadius: 10,
+    elevation: 3,
   },
   buttonText: {
     fontSize: 16,

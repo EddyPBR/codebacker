@@ -5,25 +5,30 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FeatherIcons from "react-native-vector-icons/Feather";
 import ListItem from "../../components/ListItem";
 import Header from "../../components/Header";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { RectButton } from "react-native-gesture-handler";
 
 import AsyncStorage from "@react-native-community/async-storage";
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect } from "@react-navigation/native";
 
 const CheckList = () => {
   const [loadingCode, setLoadingCode] = useState("");
   const [loadsList, setLoadsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getLoadingCode = async () => {
     const loadingCode = await AsyncStorage.getItem("@loadingCode");
-    return loadingCode ? setLoadingCode(loadingCode) : "";
+    loadingCode ? setLoadingCode(loadingCode) : "";
   };
 
   const getLoadsList = async () => {
     const loadsList = await AsyncStorage.getItem("@loadsList");
-    return loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
+    if (loadsList) {
+      setLoadsList(JSON.parse(loadsList));
+      setIsLoading(false);
+    }
   };
 
   useFocusEffect(
@@ -32,6 +37,14 @@ const CheckList = () => {
       getLoadsList();
     }, [])
   );
+
+  if (isLoading === true) {
+    return(
+      <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
+        <LoadingAnimation />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.main}>
@@ -55,12 +68,13 @@ const CheckList = () => {
       </View>
 
       <LinearGradient colors={["#2EB363", "#1E8F4B"]} style={styles.button}>
-        <RectButton onPress={() => alert("need a function to save something...")} style={styles.buttonContent}>
+        <RectButton
+          onPress={() => alert("need a function to save something...")}
+          style={styles.buttonContent}>
           <FeatherIcons name="save" size={24} color="#DEDEE3" style={{ marginRight: 8 }} />
           <Text style={styles.buttonText}>Finalizar</Text>
         </RectButton>
       </LinearGradient>
-
     </View>
   );
 };

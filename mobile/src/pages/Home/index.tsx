@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -9,13 +10,16 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { RectButton } from "react-native-gesture-handler";
-import { LinearGradient } from "expo-linear-gradient";
-import AsyncStorage from "@react-native-community/async-storage";
-import Request from "../../services/requestExample";
-import createVolumes from "../../utils/createVolumes";
 
 const codebacker = require("../../assets/Codebacker/codebacker.png");
+import { RectButton } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
+
+import AsyncStorage from "@react-native-community/async-storage";
+
+import createVolumes from "../../utils/createVolumes";
+
+import Request from "../../services/requestExample";
 
 const Home = () => {
   const [loadingCode, setLoadingCode] = useState("");
@@ -53,7 +57,7 @@ const Home = () => {
 
     await storeObjectData("@loadsList", newLoads);
     await storeUnicData("@loadingCode", loadingCode);
-
+    
     navigation.navigate("CheckList");
   }
 

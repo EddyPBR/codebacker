@@ -4,7 +4,6 @@ import { useRoute } from "@react-navigation/native";
 
 import Header from "../../components/Header";
 import ScannBox from "../../components/ScannBox";
-import SaveButton from "../../components/SaveButton";
 import LoadingAnimation from "../../components/LoadingAnimation";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -108,7 +107,6 @@ const Request = () => {
             return <ScannBox data={dataObject} key={index} />;
           })}
         </ScrollView>
-        <SaveButton />
       </View>
     </>
   );
@@ -117,7 +115,7 @@ const Request = () => {
 const styles = StyleSheet.create({
   main: {
     width: "100%",
-    height: 220,
+    height: 240,
     backgroundColor: "#E32F34",
     paddingTop: 30,
     paddingBottom: 16,
@@ -152,8 +150,8 @@ const styles = StyleSheet.create({
   },
   scannList: {
     flexDirection: "row",
-    height: 250,
-    marginTop: 20,
+    height: 320,
+    marginTop: 40,
   },
 });
 

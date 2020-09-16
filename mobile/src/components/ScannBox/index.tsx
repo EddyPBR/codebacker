@@ -43,9 +43,15 @@ const ScannBox = (params: Params) => {
       <View style={styles.boxHeader}>
         <View style={styles.statusRow}>
           <Text style={styles.boxHeaderText}>Status:</Text>
-          {volume.status === "sucess" && <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />}
-          {volume.status === "fail" && <FeatherIcons name="x-circle" size={18} color="#E53035" style={{ marginLeft: 3 }} />}
-          {volume.status === "unchecked" && <FeatherIcons name="info" size={18} color="#898383" style={{ marginLeft: 3 }} />}
+          {volume.status === "sucess" && (
+            <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />
+          )}
+          {volume.status === "fail" && (
+            <FeatherIcons name="x-circle" size={18} color="#E53035" style={{ marginLeft: 3 }} />
+          )}
+          {volume.status === "unchecked" && (
+            <FeatherIcons name="info" size={18} color="#898383" style={{ marginLeft: 3 }} />
+          )}
         </View>
         <Text style={styles.boxHeaderText}>
           Pacote {index + 1} de {numberOfVolumes}
@@ -53,53 +59,78 @@ const ScannBox = (params: Params) => {
       </View>
 
       <View style={styles.boxBody}>
-        <View style={styles.boxBodyCol}>
-          <Text style={styles.bodyTitle}>Cód. Produto:</Text>
-          <View style={styles.bodyField}>
-            <Text style={styles.fieldLabel}>Cód. Esperado</Text>
+        <View style={styles.field}>
+          <Text style={styles.label}>Código do produto</Text>
+          {volume.status === "sucess" && (
             <TextInput
-              style={styles.fieldInputUnchecked}
+              style={styles.inputSucess}
               autoCorrect={false}
               placeholderTextColor="#898383"
+              placeholder={productCode}
               contextMenuHidden={true}
               editable={false}>
               {productCode}
             </TextInput>
-          </View>
-          <View style={styles.bodyField}>
-            <Text style={styles.fieldLabel}>Cód. Obtido</Text>
+          )}
+          {volume.status === "fail" && (
             <TextInput
-              keyboardType="number-pad"
-              style={styles.fieldInputChecked}
+              style={styles.inputFail}
               autoCorrect={false}
               placeholderTextColor="#898383"
-              placeholder="Ex.: 12412512"
-            />
-          </View>
-        </View>
-        <View style={styles.boxBodyCol}>
-          <Text style={styles.bodyTitle}>Cód. Veículo:</Text>
-          <View style={styles.bodyField}>
-            <Text style={styles.fieldLabel}>Cód. Esperado</Text>
-            <TextInput
-              style={styles.fieldInputUnchecked}
-              autoCorrect={false}
+              placeholder={productCode}
               contextMenuHidden={true}
-              editable={false}
-              placeholderTextColor="#898383">
+              editable={false}>
+              {productCode}
+            </TextInput>
+          )}
+          {volume.status === "unchecked" && (
+            <TextInput
+              style={styles.inputUnchecked}
+              autoCorrect={false}
+              placeholderTextColor="#898383"
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
+              {productCode}
+            </TextInput>
+          )}
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.label}>Código do veículo</Text>
+          {volume.status === "sucess" && (
+            <TextInput
+              style={styles.inputSucess}
+              autoCorrect={false}
+              placeholderTextColor="#898383"
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
               {carNumber}
             </TextInput>
-          </View>
-          <View style={styles.bodyField}>
-            <Text style={styles.fieldLabel}>Cód. Obtido</Text>
+          )}
+          {volume.status === "fail" && (
             <TextInput
-              keyboardType="number-pad"
-              style={styles.fieldInputChecked}
+              style={styles.inputFail}
               autoCorrect={false}
               placeholderTextColor="#898383"
-              placeholder="Ex.: 12412512"
-            />
-          </View>
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
+              {carNumber}
+            </TextInput>
+          )}
+          {volume.status === "unchecked" && (
+            <TextInput
+              style={styles.inputUnchecked}
+              autoCorrect={false}
+              placeholderTextColor="#898383"
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
+              {carNumber}
+            </TextInput>
+          )}
         </View>
       </View>
 
@@ -117,10 +148,10 @@ const ScannBox = (params: Params) => {
 
 const styles = StyleSheet.create({
   scannBox: {
-    width: 240,
-    height: 240,
+    width: 220,
+    height: 250,
     backgroundColor: "#FFF",
-    padding: 10,
+    padding: 16,
     marginHorizontal: 15,
     borderRadius: 10,
     shadowColor: "#000",
@@ -131,6 +162,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 3,
+
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   boxHeader: {
     flexDirection: "row",
@@ -145,40 +179,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   boxBody: {
-    marginTop: 18,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  boxBodyCol: {
     flexDirection: "column",
   },
-  bodyTitle: {
+  field: {
+    marginTop: 16,
+  },
+  label: {
     fontSize: 14,
-    marginTop: 5,
-    color: "#240F10",
-  },
-  bodyField: {
-    marginTop: 10,
-  },
-  fieldLabel: {
-    fontSize: 10,
     color: "#868383",
   },
-  fieldInputUnchecked: {
-    width: 100,
-    height: 30,
-    fontSize: 12,
-    padding: 8,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#E32F34",
-    borderRadius: 5,
-    color: "#E32F34",
-  },
-  fieldInputChecked: {
-    width: 100,
-    height: 30,
-    fontSize: 12,
+  inputUnchecked: {
+    width: "100%",
+    height: 34,
+    fontSize: 16,
     padding: 8,
     borderWidth: 1,
     borderStyle: "solid",
@@ -186,12 +199,34 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: "#3D3D90",
   },
+  inputSucess: {
+    width: "100%",
+    height: 34,
+    fontSize: 16,
+    padding: 8,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#2EB363",
+    borderRadius: 5,
+    color: "#2EB363",
+  },
+  inputFail: {
+    width: "100%",
+    height: 34,
+    fontSize: 16,
+    padding: 8,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#E32F34",
+    borderRadius: 5,
+    color: "#E32F34",
+  },
   button: {
-    width: 100,
-    height: 30,
+    width: 120,
+    height: 38,
     borderRadius: 5,
     alignSelf: "center",
-    marginTop: 20,
+    marginVertical: 16,
   },
   buttonRow: {
     flexDirection: "row",
@@ -201,9 +236,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   buttonText: {
-    fontSize: 12,
+    fontSize: 16,
     color: "#DEDEE3",
-    fontWeight: "bold",
     textAlign: "center",
   },
 });

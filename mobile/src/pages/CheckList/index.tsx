@@ -58,7 +58,7 @@ const CheckList = () => {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: "#DEDEE3",
+    backgroundColor: "#ececef",
     alignItems: "center",
     paddingVertical: 30,
     paddingHorizontal: 30,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   checkList: {
     marginTop: 30,
     alignSelf: "flex-start",
-    height: 350,
+    height: 380,
     width: "100%",
   },
   titleRow: {

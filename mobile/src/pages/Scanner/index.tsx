@@ -3,7 +3,10 @@ import { Text, View, StyleSheet, TextInput, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import FeatherIcons from "react-native-vector-icons/Feather";
+
 import { RectButton } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 
 // import SaveButton from "../../components/SaveButton";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -108,7 +111,7 @@ const CheckList = () => {
     return volumesChecked.length === volumes.length;
   }
 
-  function handleSaveState() {
+  const updateRequestLoad = () => {
     const status = (trulyCarCode === carCod && trulyProductCode === productCod) ? "sucess" : "fail";
 
     const newVolume = {
@@ -117,8 +120,13 @@ const CheckList = () => {
     };
 
     const requestedLoad = loadsList.filter((load) => load.requestNumber === requestNumber)[0] as Data | any;
-
     requestedLoad.volumes[id] = newVolume;
+
+    return (requestedLoad);
+  }
+
+  function handleSaveState() {
+    const requestedLoad = updateRequestLoad();
 
     checkIfAllVolumesAreSucessful(requestedLoad.volumes)? requestedLoad.status = "sucess" : requestedLoad.status = "fail";
 
@@ -293,9 +301,13 @@ const CheckList = () => {
         </View>
       </View>
 
-      <Button title="Salvar" color="#2EB363" onPress={handleSaveState} />
+      <LinearGradient colors={["#2EB363", "#1E8F4B"]} style={styles.button}>
+        <RectButton onPress={handleSaveState} style={styles.buttonContent}>
+          <FeatherIcons name="save" size={24} color="#DEDEE3" style={{ marginRight: 8 }} />
+          <Text style={styles.buttonText}>Finalizar</Text>
+        </RectButton>
+      </LinearGradient>
 
-      {/* <SaveButton /> */}
     </View>
   );
 };
@@ -375,6 +387,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  button: {
+    width: 160,
+    height: 46,
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  buttonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#DEDEE3",
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingVertical: 14,
   },
 });
 

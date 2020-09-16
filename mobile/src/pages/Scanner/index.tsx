@@ -5,24 +5,38 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { RectButton } from "react-native-gesture-handler";
 
-import SaveButton from "../../components/SaveButton";
+// import SaveButton from "../../components/SaveButton";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
+
+interface Volume {
+  numVolume: string,
+  status: string,
+}
 
 interface Data {
   requestNumber: string;
   productCode: string;
   carNumber: string;
-  volume: {
-    numVolume: string;
-    status: string;
-  };
+  volume: Volume;
   index: number;
+}
+
+interface Load {
+  carNumber: string,
+  codOS: string,
+  requestNumber: string,
+  vehicle: string,
+  volumes: [
+    Volume
+  ],
 }
 
 const CheckList = () => {
   const route = useRoute();
-  const { requestNumber, productCode, carNumber, volume, index } = route.params as Data;
+  const navigation = useNavigation();
+
+  const { requestNumber, productCode, carNumber, volume, index: id } = route.params as Data;
 
   const [hasPermission, setHasPermission] = useState(Boolean);
   const [scanned, setScanned] = useState(true);
@@ -33,12 +47,16 @@ const CheckList = () => {
   const [productCod, setProductCode] = useState("");
   const [carCod, setCarCode] = useState("");
 
-  const [loadsList, setLoadsList] = useState([]);
-  const navigation = useNavigation();
+  const [loadsList, setLoadsList] = useState([{} as Load]);
 
   const getLoadsList = async () => {
     const loadsList = await AsyncStorage.getItem("@loadsList");
     return loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
+  };
+
+  const getUserPermission = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    setHasPermission(status === "granted");
   };
 
   useEffect(() => {
@@ -46,10 +64,7 @@ const CheckList = () => {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
+    getUserPermission();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }: any) => {
@@ -77,36 +92,43 @@ const CheckList = () => {
     setTypeToScan(type);
   }
 
-  function handleSaveState() {
-    const status = trulyCarCode === carCod && trulyProductCode === productCod ? "sucess" : "fail";
+  const storeData = async (key: string, value: Object) => {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(key, jsonValue);
+  };
 
-    const requestedLoad = loadsList.filter((load) => load.requestNumber === requestNumber);
+  const checkIfAllVolumesAreSucessful = (volumes: Array<Volume>) => {
+    const volumesChecked = [];
+    volumes.map((volume) => { 
+      if(volume.status === "sucess") { 
+        volumesChecked.push(volume)
+      }
+    });
+
+    return volumesChecked.length === volumes.length;
+  }
+
+  function handleSaveState() {
+    const status = (trulyCarCode === carCod && trulyProductCode === productCod) ? "sucess" : "fail";
 
     const newVolume = {
       numVolume: volume.numVolume,
       status,
     };
 
-    requestedLoad[index] = newVolume;
+    const requestedLoad = loadsList.filter((load) => load.requestNumber === requestNumber)[0] as Data | any;
 
-    const newLoadsList = loadsList.map((load) =>
-      load.requestNumber === requestNumber ? (load.volumes = requestedLoad) : load
-    );
+    requestedLoad.volumes[id] = newVolume;
+
+    checkIfAllVolumesAreSucessful(requestedLoad.volumes)? requestedLoad.status = "sucess" : requestedLoad.status = "fail";
+
+    const newLoadsList = () => loadsList.map( (load) => load.requestNumber === requestNumber ? load.volumes : load) as Array<Load>;
+
     setLoadsList(newLoadsList);
 
-    // create function to save a object on storage
-    const storeData = async (key, value) => {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem(key, jsonValue);
-    };
-
-    const newNewLoadsList = loadsList.map((load) => {
-      load.status = "sucess";
-      return load;
-    });
-
-    storeData("@loadsList", newNewLoadsList);
-    navigation.goBack();
+    storeData("@loadsList", loadsList).then(
+      () => navigation.goBack()
+    );
   }
 
   if (hasPermission === null) {

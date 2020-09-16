@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
@@ -76,7 +76,7 @@ const Request = () => {
   const numberOfVolumes = volumes.length;
 
   return (
-    <>  
+    <>
       <View style={styles.main}>
         <Header loadingCode={loadingCode} isWhite />
         <View style={styles.mainBody}>

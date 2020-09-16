@@ -19,7 +19,7 @@ const ListItem = (params: Params) => {
 
   function handleNavitigateToRequest() {
     navigation.navigate("Request", {
-      requestNumber
+      requestNumber,
     });
   }
 

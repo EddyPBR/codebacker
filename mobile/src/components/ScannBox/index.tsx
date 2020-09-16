@@ -10,7 +10,6 @@ interface Data {
   carNumber: string;
   index: number;
   numberOfVolumes: number;
-  status: string;
   requestNumber: string;
   volume: {
     numVolume: string;
@@ -23,7 +22,7 @@ interface Params {
 }
 
 const ScannBox = (params: Params) => {
-  const { codOS, carNumber, index, numberOfVolumes, status, requestNumber, volume } = params.data;
+  const { codOS, carNumber, index, numberOfVolumes, requestNumber, volume } = params.data;
 
   const productCode = "000" + codOS + volume.numVolume;
 
@@ -44,8 +43,9 @@ const ScannBox = (params: Params) => {
       <View style={styles.boxHeader}>
         <View style={styles.statusRow}>
           <Text style={styles.boxHeaderText}>Status:</Text>
-          {/* need create a conditional to change the icon */}
-          <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />
+          {volume.status === "sucess" && <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />}
+          {volume.status === "fail" && <FeatherIcons name="x-circle" size={18} color="#E53035" style={{ marginLeft: 3 }} />}
+          {volume.status === "unchecked" && <FeatherIcons name="info" size={18} color="#898383" style={{ marginLeft: 3 }} />}
         </View>
         <Text style={styles.boxHeaderText}>
           Pacote {index + 1} de {numberOfVolumes}

@@ -5,6 +5,7 @@ import { useRoute } from "@react-navigation/native";
 import Header from "../../components/Header";
 import ScannBox from "../../components/ScannBox";
 import SaveButton from "../../components/SaveButton";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from '@react-navigation/native';
@@ -63,7 +64,9 @@ const Request = () => {
 
   if(isLoading === true) {
     return(
-      <Text style={{marginTop: 50}}>CARREGANDO...</Text>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <LoadingAnimation />
+      </View>
     );
   }
 

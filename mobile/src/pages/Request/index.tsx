@@ -39,33 +39,38 @@ interface RequestedLoad {
 const Request = () => {
   const [loadingCode, setLoadingCode] = useState("");
   const [loadsList, setLoadsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const route = useRoute();
   const { requestNumber } = route.params as Params;
 
   const getLoadingCode = async () => {
     const loadingCode = await AsyncStorage.getItem("@loadingCode");
-    return loadingCode ? setLoadingCode(loadingCode) : "";
+    loadingCode ? setLoadingCode(loadingCode) : "";
   };
 
   const getLoadsList = async () => {
     const loadsList = await AsyncStorage.getItem("@loadsList");
-    return loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
+    loadsList ? setLoadsList(JSON.parse(loadsList)) : [];
   };
 
   useFocusEffect(
     React.useCallback(() => {
       getLoadingCode();
-      getLoadsList();
+      getLoadsList().then(() => setIsLoading(false));
     }, [])
   );
 
-  const getRequestedLoad = () => {
-    const load = loadsList.filter((load: Data) => load.requestNumber == String(requestNumber));
+  if(isLoading === true) {
+    return(
+      <Text style={{marginTop: 50}}>CARREGANDO...</Text>
+    );
   }
 
-  // const { codOS, vehicle, carNumber, status, volumes } = requestedLoad as RequestedLoad;
-  // const numberOfVolumes = volumes.lenght();
+  const requestedLoad = loadsList.filter((load: Data) => load.requestNumber == String(requestNumber))[0];
+  
+  const { codOS, vehicle, carNumber, status, volumes } = requestedLoad as RequestedLoad;
+  const numberOfVolumes = volumes.length;
 
   return (
     <>  
@@ -77,16 +82,16 @@ const Request = () => {
         </View>
         <View style={styles.mainFooter}>
           <View style={styles.mainDetails}>
-            {/* <Text style={styles.detailsText}>OS: {codOS}</Text> */}
-            {/* <Text style={styles.detailsText}>Veículo: {vehicle}</Text> */}
+            <Text style={styles.detailsText}>OS: {codOS}</Text>
+            <Text style={styles.detailsText}>Veículo: {vehicle}</Text>
           </View>
-          {/* <Text style={styles.mainPackages}>Checados: 0/{numberOfVolumes}</Text> */}
+          <Text style={styles.mainPackages}>Checados: 0/{numberOfVolumes}</Text>
         </View>
       </View>
 
       <View>
         <ScrollView style={styles.scannList} horizontal={true}>
-          {/* {volumes.map((volume, index) => {
+          {volumes.map((volume, index) => {
             const dataObject = {
               requestNumber,
               codOS,
@@ -98,7 +103,7 @@ const Request = () => {
             };
 
             return <ScannBox data={dataObject} key={index} />;
-          })} */}
+          })}
         </ScrollView>
         <SaveButton />
       </View>

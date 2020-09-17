@@ -38,17 +38,126 @@ const ScannBox = (params: Params) => {
     });
   }
 
+  if (volume.status === "sucess") {
+    return (
+      <View style={styles.scannBox}>
+        <View style={styles.boxHeaderSucess}>
+          <View style={styles.statusRow}>
+            <Text style={styles.boxHeaderText}>Status:</Text>
+            {volume.status === "sucess" && (
+              <FeatherIcons
+                name="check-circle"
+                size={18}
+                color="#2EB363"
+                style={{ marginLeft: 3 }}
+              />
+            )}
+          </View>
+          <Text style={styles.boxHeaderText}>
+            Pacote {index + 1} de {numberOfVolumes}
+          </Text>
+        </View>
+
+        <View style={styles.boxBody}>
+          <View style={styles.field}>
+            <Text style={styles.label}>Código do produto</Text>
+            <TextInput
+              style={styles.input}
+              autoCorrect={false}
+              placeholderTextColor="#898383"
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
+              {productCode}
+            </TextInput>
+          </View>
+
+          <View style={styles.field}>
+            <Text style={styles.label}>Código do veículo</Text>
+            <TextInput
+              style={styles.input}
+              autoCorrect={false}
+              placeholderTextColor="#898383"
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
+              {carNumber}
+            </TextInput>
+          </View>
+        </View>
+
+        <LinearGradient colors={["#E53035", "#BC151B"]} style={styles.button}>
+          <RectButton onPress={() => handleNavigateToScann()}>
+            <View style={styles.buttonRow}>
+              <FeatherIcons name="camera" size={18} color="#DEDEE3" style={{ marginRight: 8 }} />
+              <Text style={styles.buttonText}>Escanear</Text>
+            </View>
+          </RectButton>
+        </LinearGradient>
+      </View>
+    );
+  }
+
+  if (volume.status === "fail") {
+    return (
+      <View style={styles.scannBox}>
+        <View style={styles.boxHeaderFail}>
+          <View style={styles.statusRow}>
+            <Text style={styles.boxHeaderText}>Status:</Text>
+            {volume.status === "fail" && (
+              <FeatherIcons name="x-circle" size={18} color="#E53035" style={{ marginLeft: 3 }} />
+            )}
+          </View>
+          <Text style={styles.boxHeaderText}>
+            Pacote {index + 1} de {numberOfVolumes}
+          </Text>
+        </View>
+
+        <View style={styles.boxBody}>
+          <View style={styles.field}>
+            <Text style={styles.label}>Código do produto</Text>
+            <TextInput
+              style={styles.input}
+              autoCorrect={false}
+              placeholderTextColor="#898383"
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
+              {productCode}
+            </TextInput>
+          </View>
+
+          <View style={styles.field}>
+            <Text style={styles.label}>Código do veículo</Text>
+            <TextInput
+              style={styles.input}
+              autoCorrect={false}
+              placeholderTextColor="#898383"
+              placeholder={productCode}
+              contextMenuHidden={true}
+              editable={false}>
+              {carNumber}
+            </TextInput>
+          </View>
+        </View>
+
+        <LinearGradient colors={["#E53035", "#BC151B"]} style={styles.button}>
+          <RectButton onPress={() => handleNavigateToScann()}>
+            <View style={styles.buttonRow}>
+              <FeatherIcons name="camera" size={18} color="#DEDEE3" style={{ marginRight: 8 }} />
+              <Text style={styles.buttonText}>Escanear</Text>
+            </View>
+          </RectButton>
+        </LinearGradient>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.scannBox}>
-      <View style={styles.boxHeader}>
+      <View style={styles.boxHeaderUnchecked}>
         <View style={styles.statusRow}>
           <Text style={styles.boxHeaderText}>Status:</Text>
-          {volume.status === "sucess" && (
-            <FeatherIcons name="check-circle" size={18} color="#2EB363" style={{ marginLeft: 3 }} />
-          )}
-          {volume.status === "fail" && (
-            <FeatherIcons name="x-circle" size={18} color="#E53035" style={{ marginLeft: 3 }} />
-          )}
           {volume.status === "unchecked" && (
             <FeatherIcons name="info" size={18} color="#898383" style={{ marginLeft: 3 }} />
           )}
@@ -61,76 +170,28 @@ const ScannBox = (params: Params) => {
       <View style={styles.boxBody}>
         <View style={styles.field}>
           <Text style={styles.label}>Código do produto</Text>
-          {volume.status === "sucess" && (
-            <TextInput
-              style={styles.inputSucess}
-              autoCorrect={false}
-              placeholderTextColor="#898383"
-              placeholder={productCode}
-              contextMenuHidden={true}
-              editable={false}>
-              {productCode}
-            </TextInput>
-          )}
-          {volume.status === "fail" && (
-            <TextInput
-              style={styles.inputFail}
-              autoCorrect={false}
-              placeholderTextColor="#898383"
-              placeholder={productCode}
-              contextMenuHidden={true}
-              editable={false}>
-              {productCode}
-            </TextInput>
-          )}
-          {volume.status === "unchecked" && (
-            <TextInput
-              style={styles.inputUnchecked}
-              autoCorrect={false}
-              placeholderTextColor="#898383"
-              placeholder={productCode}
-              contextMenuHidden={true}
-              editable={false}>
-              {productCode}
-            </TextInput>
-          )}
+          <TextInput
+            style={styles.input}
+            autoCorrect={false}
+            placeholderTextColor="#898383"
+            placeholder={productCode}
+            contextMenuHidden={true}
+            editable={false}>
+            {productCode}
+          </TextInput>
         </View>
 
         <View style={styles.field}>
           <Text style={styles.label}>Código do veículo</Text>
-          {volume.status === "sucess" && (
-            <TextInput
-              style={styles.inputSucess}
-              autoCorrect={false}
-              placeholderTextColor="#898383"
-              placeholder={productCode}
-              contextMenuHidden={true}
-              editable={false}>
-              {carNumber}
-            </TextInput>
-          )}
-          {volume.status === "fail" && (
-            <TextInput
-              style={styles.inputFail}
-              autoCorrect={false}
-              placeholderTextColor="#898383"
-              placeholder={productCode}
-              contextMenuHidden={true}
-              editable={false}>
-              {carNumber}
-            </TextInput>
-          )}
-          {volume.status === "unchecked" && (
-            <TextInput
-              style={styles.inputUnchecked}
-              autoCorrect={false}
-              placeholderTextColor="#898383"
-              placeholder={productCode}
-              contextMenuHidden={true}
-              editable={false}>
-              {carNumber}
-            </TextInput>
-          )}
+          <TextInput
+            style={styles.input}
+            autoCorrect={false}
+            placeholderTextColor="#898383"
+            placeholder={productCode}
+            contextMenuHidden={true}
+            editable={false}>
+            {carNumber}
+          </TextInput>
         </View>
       </View>
 
@@ -149,9 +210,8 @@ const ScannBox = (params: Params) => {
 const styles = StyleSheet.create({
   scannBox: {
     width: 220,
-    height: 250,
+    height: 275,
     backgroundColor: "#FFF",
-    padding: 16,
     marginHorizontal: 15,
     borderRadius: 10,
     shadowColor: "#000",
@@ -164,11 +224,31 @@ const styles = StyleSheet.create({
     elevation: 3,
 
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
   },
-  boxHeader: {
+  boxHeaderSucess: {
     flexDirection: "row",
     justifyContent: "space-between",
+    padding: 16,
+    backgroundColor: "#C8E3D5",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  boxHeaderFail: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 16,
+    backgroundColor: "#EDD0D2",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  boxHeaderUnchecked: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 16,
+    backgroundColor: "#FFF",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   statusRow: {
     flexDirection: "row",
@@ -180,6 +260,7 @@ const styles = StyleSheet.create({
   },
   boxBody: {
     flexDirection: "column",
+    paddingHorizontal: 16,
   },
   field: {
     marginTop: 16,
@@ -188,7 +269,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#868383",
   },
-  inputUnchecked: {
+  input: {
     width: "100%",
     height: 34,
     fontSize: 16,
@@ -199,34 +280,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: "#3D3D90",
   },
-  inputSucess: {
-    width: "100%",
-    height: 34,
-    fontSize: 16,
-    padding: 8,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#2EB363",
-    borderRadius: 5,
-    color: "#2EB363",
-  },
-  inputFail: {
-    width: "100%",
-    height: 34,
-    fontSize: 16,
-    padding: 8,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#E32F34",
-    borderRadius: 5,
-    color: "#E32F34",
-  },
   button: {
     width: 120,
     height: 38,
     borderRadius: 5,
     alignSelf: "center",
-    marginVertical: 16,
+    marginTop: 24,
   },
   buttonRow: {
     flexDirection: "row",

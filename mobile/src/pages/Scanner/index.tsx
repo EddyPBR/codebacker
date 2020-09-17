@@ -7,8 +7,8 @@ import FeatherIcons from "react-native-vector-icons/Feather";
 
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
-// import SaveButton from "../../components/SaveButton";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -140,11 +140,19 @@ const CheckList = () => {
   }
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return (
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <LoadingAnimation />
+        <Text style={{marginTop: 10,}}>É necessária a permissão da camera</Text>
+      </View>
+    )
   }
 
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+      <LoadingAnimation />
+      <Text style={{color: "#E53035", fontSize: 24, fontWeight: "bold", marginTop: 10,}}>ERRO SEM ACESSO A CAMERA</Text>
+    </View>
   }
 
   return (

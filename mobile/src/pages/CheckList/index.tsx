@@ -12,11 +12,18 @@ import { RectButton } from "react-native-gesture-handler";
 
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 const CheckList = () => {
   const [loadingCode, setLoadingCode] = useState("");
   const [loadsList, setLoadsList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigation = useNavigation();
+
+  const storeClearData = async () => {
+    await AsyncStorage.clear();
+  }
 
   const getLoadingCode = async () => {
     const loadingCode = await AsyncStorage.getItem("@loadingCode");
@@ -30,6 +37,11 @@ const CheckList = () => {
       setIsLoading(false);
     }
   };
+
+  async function handleSaveCleanAndOut() {
+    await storeClearData();
+    navigation.goBack();
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -69,7 +81,7 @@ const CheckList = () => {
 
       <LinearGradient colors={["#2EB363", "#1E8F4B"]} style={styles.button}>
         <RectButton
-          onPress={() => alert("need a function to save something...")}
+          onPress={() => handleSaveCleanAndOut()}
           style={styles.buttonContent}>
           <FeatherIcons name="save" size={24} color="#DEDEE3" style={{ marginRight: 8 }} />
           <Text style={styles.buttonText}>Finalizar</Text>

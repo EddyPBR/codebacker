@@ -26,6 +26,12 @@ const Home = () => {
 
   const navigation = useNavigation();
 
+  const storeClearData = async () => {
+    await AsyncStorage.clear();
+  }
+  
+  storeClearData();
+
   const storeUnicData = async (key: string, value: string) => {
     await AsyncStorage.setItem(key, value);
   };

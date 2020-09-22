@@ -21,7 +21,7 @@ import createVolumes from "../../utils/createVolumes";
 import api from "../../services/api";
 
 const Home = () => {
-  const [loadingCode, setLoadingCode] = useState("504144");
+  const [loadingCode, setLoadingCode] = useState("");
 
   const navigation = useNavigation();
 
@@ -41,12 +41,25 @@ const Home = () => {
   };
 
   const requestLoadsList = async (id: string) => {
-    const loads = await api.get(`/loads/${id}`);
-    return loads;
+    try {
+      const loads = await api.get(`/loads/${id}`);
+      return loads;
+    } catch (error) {
+      return "error404";
+    }
   }
 
   async function handleNavigateToCheckList() {
     const loadsData = await requestLoadsList(loadingCode); // will be a async function to acess the Database
+
+    if (loadsData === "error404") {
+      return alert("ERROR 404: Não foi encontrado o carramento!");
+    }
+
+    if (loadsData.data === "query send no rows") {
+      return alert("ERROR NO_ROWS: Não foi encontrado o carramento!");
+    }
+
     const loads = [];
 
     for (const load in loadsData.data) {
@@ -54,6 +67,14 @@ const Home = () => {
         const element = loadsData.data[load];
 
         const volumes = createVolumes(element[2]);
+
+        const verifyData = element.map((data: any) => {
+          return (data === undefined || data === null) ? false : true;
+        });
+
+        if (verifyData.includes(false)) {
+          return alert("ERROR UNDEFINED: Este carregamento não possui os dados necessários!");
+        }
 
         const newLoad = {
           carNumber: element[0],

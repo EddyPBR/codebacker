@@ -20,14 +20,6 @@ import createVolumes from "../../utils/createVolumes";
 
 import api from "../../services/api";
 
-interface Load {
-  carNumber: string,
-  codOS: string,
-  requestNumber: string,
-  vehicle: string,
-  volumes: number
-}
-
 const Home = () => {
   const [loadingCode, setLoadingCode] = useState("504144");
 
@@ -67,7 +59,7 @@ const Home = () => {
           carNumber: element[0],
           requestNumber: element[1],
           volumes: volumes,
-          codOs: element[3],
+          codOS: element[3],
           vehicle: element[4],
           status: "unchecked",
         }

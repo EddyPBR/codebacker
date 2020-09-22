@@ -1,12 +1,18 @@
 {
-  "name": "mobile",
-  "displayName": "mobile",
+  "name": "Codebacker",
+  "displayName": "Codebacker - beta",
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Codebacker",
+    "slug": "Codebacker",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.rallymotos.codebacker",
+      "versionCode": 1,
+      "icon": "./app_icon.png",
+      "permissions": ["CAMERA"]
+    }
   }
 }

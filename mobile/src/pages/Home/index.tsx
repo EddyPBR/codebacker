@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -19,10 +18,18 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 import createVolumes from "../../utils/createVolumes";
 
-import Request from "../../services/requestExample";
+import api from "../../services/api";
+
+interface Load {
+  carNumber: string,
+  codOS: string,
+  requestNumber: string,
+  vehicle: string,
+  volumes: number
+}
 
 const Home = () => {
-  const [loadingCode, setLoadingCode] = useState("");
+  const [loadingCode, setLoadingCode] = useState("504144");
 
   const navigation = useNavigation();
 
@@ -41,27 +48,35 @@ const Home = () => {
     await AsyncStorage.setItem(key, jsonValue);
   };
 
+  const requestLoadsList = async (id: string) => {
+    const loads = await api.get(`/loads/${id}`);
+    return loads;
+  }
+
   async function handleNavigateToCheckList() {
-    const loads = Request; // will be a async function to acess the Database
+    const loadsData = await requestLoadsList(loadingCode); // will be a async function to acess the Database
+    const loads = [];
 
-    const newLoads = loads.map((loadData) => {
-      const { NUMCAR, NUMPED, NUMVOLUME, OS, VEICULO } = loadData;
+    for (const load in loadsData.data) {
+      if (Object.prototype.hasOwnProperty.call(loadsData.data, load)) {
+        const element = loadsData.data[load];
 
-      const volumes = createVolumes(NUMVOLUME);
+        const volumes = createVolumes(element[2]);
 
-      const newLoad = {
-        codOS: OS,
-        carNumber: NUMCAR,
-        requestNumber: NUMPED,
-        vehicle: VEICULO,
-        volumes: volumes,
-        status: "unchecked",
-      };
+        const newLoad = {
+          carNumber: element[0],
+          requestNumber: element[1],
+          volumes: volumes,
+          codOs: element[3],
+          vehicle: element[4],
+          status: "unchecked",
+        }
 
-      return newLoad;
-    });
+        loads.push(newLoad);
+      }
+    }
 
-    await storeObjectData("@loadsList", newLoads);
+    await storeObjectData("@loadsList", loads);
     await storeUnicData("@loadingCode", loadingCode);
     
     navigation.navigate("CheckList");

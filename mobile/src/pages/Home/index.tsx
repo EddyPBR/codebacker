@@ -50,10 +50,13 @@ const Home = () => {
   }
 
   async function handleNavigateToCheckList() {
+    if (loadingCode === "0") {
+      return alert("ERROR: Código inválido!")
+    }
     const loadsData = await requestLoadsList(loadingCode); // will be a async function to acess the Database
 
     if (loadsData === "error404") {
-      return alert("ERROR 404: Não foi encontrado o carramento!");
+      return alert("ERROR 404: O servidor não respondeu ou não foram encontrados carregamentos!");
     }
 
     if (loadsData.data === "query send no rows") {

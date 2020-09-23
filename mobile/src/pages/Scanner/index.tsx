@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TextInput, Button } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";

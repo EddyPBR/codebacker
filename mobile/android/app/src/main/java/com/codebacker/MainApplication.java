@@ -1,4 +1,6 @@
-package com.mobile;
+package com.codebacker;
+
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 
 import android.app.Application;
 import android.content.Context;
@@ -11,7 +13,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.mobile.generated.BasePackageList;
+import com.codebacker.generated.BasePackageList;
 
 import org.unimodules.adapters.react.ReactAdapterPackage;
 import org.unimodules.adapters.react.ModuleRegistryAdapter;
@@ -41,9 +43,10 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      List<ReactPackage> packages = new PackageList(this).getPackages();
-      packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
-      return packages;
+      return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+          new AsyncStoragePackage()
+      );
     }
 
     @Override

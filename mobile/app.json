@@ -1,9 +1,13 @@
 {
+  "name": "codebacker",
+  "displayName": "codebacker",
   "expo": {
-    "name": "Codebacker",
+    "name": "codebacker",
     "slug": "codebacker",
-    "privacy": "public",
-    "sdkVersion": "36.0.0",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "platforms": [
       "android"
     ],
@@ -13,13 +17,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#E32F34"
     },
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "android": {
       "package": "com.rallymotos.codebacker",
       "versionCode": 1
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#E32F34",
+      "barStyle": "light-content"
     }
   }
 }

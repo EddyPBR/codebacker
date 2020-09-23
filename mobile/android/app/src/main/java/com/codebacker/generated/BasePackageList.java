@@ -1,4 +1,4 @@
-package com.mobile.generated;
+package com.codebacker.generated;
 
 import java.util.Arrays;
 import java.util.List;

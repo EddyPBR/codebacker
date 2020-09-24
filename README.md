@@ -4,9 +4,9 @@
 </h1>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/badge/typescript-60.6%25-%23225D6E">
-  <img alt="GitHub" src="https://img.shields.io/badge/license-MIT-%2397CA00"> 
-  <img alt="Made by EddyPBR" src="https://img.shields.io/badge/made%20by-EddyPBR-%236A57D5"> <br />
+  <img alt="GitHub top language" src="https://img.shields.io/badge/typescript-60.6%25-%23225D6E" />
+  <img alt="GitHub" src="https://img.shields.io/badge/license-MIT-%2397CA00" /> 
+  <img alt="Made by EddyPBR" src="https://img.shields.io/badge/made%20by-EddyPBR-%236A57D5" /> <br />
 </p> 
 
 <br /><br />
@@ -23,6 +23,13 @@ company's internal Oracle database) and I developed this project to reduce the c
 these packages.
 
 <br />
+
+## :eyes: Preview
+
+<p align="center">
+  <img alt="Codebacker home" src=".github/Home.png" margin-right="20px" />
+  <img alt="Codebacker request screen" src=".github/Request%20(with%20failed).png" />
+</p> 
 
 ## :computer: Technologies Used
 

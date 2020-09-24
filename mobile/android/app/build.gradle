@@ -4,10 +4,10 @@ import com.android.build.OutputFile
 
 // VECTOR ICONS
 project.ext.vectoricons = [
-    iconFontNames: ['MaterialCommunityIcons.ttf'] // add fonts needed
+    iconFontNames: ['MaterialCommunityIcons.ttf', 'Feather.ttf', 'FontAwesome5_Brands.ttf', 'FontAwesome5_Regular.ttf', 'FontAwesome5_Solid.ttf'] // add fonts needed
 ]
 
-`apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"`
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets

@@ -45,8 +45,8 @@ const CheckList = () => {
   const [scanned, setScanned] = useState(true);
   const [typeToScan, setTypeToScan] = useState("");
 
-  const trulyProductCode = "7898644881023"; // productCode
-  const trulyCarCode = "7894537020678"; // carNumber
+  const trulyProductCode = productCode; // productCode
+  const trulyCarCode = carNumber; // carNumber
   const [productCod, setProductCode] = useState("");
   const [carCod, setCarCode] = useState("");
 

@@ -1,7 +1,5 @@
 package com.codebacker;
 
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
-
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
@@ -43,10 +41,9 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-          new AsyncStoragePackage()
-      );
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+      return packages;
     }
 
     @Override

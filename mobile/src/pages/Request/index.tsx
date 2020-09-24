@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import ScannBox from "../../components/ScannBox";
 import LoadingAnimation from "../../components/LoadingAnimation";
 
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 
 interface Params {

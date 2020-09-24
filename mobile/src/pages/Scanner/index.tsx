@@ -9,7 +9,7 @@ import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import LoadingAnimation from "../../components/LoadingAnimation";
 
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 interface Volume {

@@ -10,7 +10,7 @@ import LoadingAnimation from "../../components/LoadingAnimation";
 import { LinearGradient } from "expo-linear-gradient";
 import { RectButton } from "react-native-gesture-handler";
 
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 

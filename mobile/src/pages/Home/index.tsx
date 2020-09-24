@@ -14,7 +14,7 @@ const codebacker = require("../../assets/Codebacker/codebacker.png");
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from "react-native";
 
 import createVolumes from "../../utils/createVolumes";
 

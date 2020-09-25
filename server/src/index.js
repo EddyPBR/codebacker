@@ -54,7 +54,7 @@ app.post("/save", function (req, res) {
   fs.writeFile(`./src/logs/${fileName}.json`, JSON.stringify(data), function(error) {
     if(error) {
       console.log("ERROR TO SAVE LOG!!!");
-      return res.status(500).send("Erro do sistema");
+      return res.status(500).send("System error");
     } else {
       return res.status(200).send("Sucess");
     }

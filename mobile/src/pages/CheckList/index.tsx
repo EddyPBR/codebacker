@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   checkList: {
-    marginTop: 30,
+    marginTop: 16,
     alignSelf: "flex-start",
-    height: 380,
+    height: 300,
     width: "100%",
   },
   titleRow: {

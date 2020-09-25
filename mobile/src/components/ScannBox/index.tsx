@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 interface Data {
   codOS: string;
-  carNumber: string;
+  vehicle: string;
   index: number;
   numberOfVolumes: number;
   requestNumber: string;
@@ -22,7 +22,7 @@ interface Params {
 }
 
 const ScannBox = (params: Params) => {
-  const { codOS, carNumber, index, numberOfVolumes, requestNumber, volume } = params.data;
+  const { codOS, vehicle, index, numberOfVolumes, requestNumber, volume } = params.data;
 
   const productCode = "000" + codOS + volume.numVolume;
 
@@ -32,7 +32,7 @@ const ScannBox = (params: Params) => {
     navigation.navigate("Scanner", {
       requestNumber,
       productCode,
-      carNumber,
+      vehicle,
       volume,
       index,
     });
@@ -81,7 +81,7 @@ const ScannBox = (params: Params) => {
               placeholder={productCode}
               contextMenuHidden={true}
               editable={false}>
-              {carNumber}
+              {vehicle}
             </TextInput>
           </View>
         </View>
@@ -136,7 +136,7 @@ const ScannBox = (params: Params) => {
               placeholder={productCode}
               contextMenuHidden={true}
               editable={false}>
-              {carNumber}
+              {vehicle}
             </TextInput>
           </View>
         </View>
@@ -190,7 +190,7 @@ const ScannBox = (params: Params) => {
             placeholder={productCode}
             contextMenuHidden={true}
             editable={false}>
-            {carNumber}
+            {vehicle}
           </TextInput>
         </View>
       </View>

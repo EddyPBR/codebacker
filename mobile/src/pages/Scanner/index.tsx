@@ -20,7 +20,7 @@ interface Volume {
 interface Data {
   requestNumber: string;
   productCode: string;
-  carNumber: string;
+  vehicle: string;
   volume: Volume;
   index: number;
 }
@@ -39,14 +39,14 @@ const CheckList = () => {
   const route = useRoute();
   const navigation = useNavigation();
 
-  const { requestNumber, productCode, carNumber, volume, index: id } = route.params as Data;
+  const { requestNumber, productCode, vehicle, volume, index: id } = route.params as Data;
 
   const [hasPermission, setHasPermission] = useState(Boolean);
   const [scanned, setScanned] = useState(true);
   const [typeToScan, setTypeToScan] = useState("");
 
-  const trulyProductCode = productCode; // productCode
-  const trulyCarCode = carNumber; // carNumber
+  const trulyProductCode = productCode;
+  const trulyCarCode = vehicle;
   const [productCod, setProductCode] = useState("");
   const [carCod, setCarCode] = useState("");
 

@@ -73,6 +73,7 @@ const Request = () => {
   
   const { codOS, vehicle, carNumber, status, volumes } = requestedLoad as RequestedLoad;
   const numberOfVolumes = volumes.length;
+  const checkedVolumes = volumes.reduce( (value, volume) => volume.status === "sucess" ? value + 1: value, 0);
 
   return (
     <>
@@ -87,7 +88,7 @@ const Request = () => {
             <Text style={styles.detailsText}>OS: {codOS}</Text>
             <Text style={styles.detailsText}>Veículo: {vehicle}</Text>
           </View>
-          <Text style={styles.mainPackages}>Checados: 0/{numberOfVolumes}</Text>
+          <Text style={styles.mainPackages}>Checados: {checkedVolumes}/{numberOfVolumes}</Text>
         </View>
       </View>
 
@@ -97,7 +98,7 @@ const Request = () => {
             const dataObject = {
               requestNumber,
               codOS,
-              carNumber,
+              vehicle,
               numberOfVolumes,
               status,
               index,

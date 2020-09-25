@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { RectButton } from "react-native-gesture-handler";
 
@@ -13,11 +13,23 @@ const Header = (params: Params) => {
   const { isWhite, loadingCode } = params;
   const navigation = useNavigation();
 
+  const onBackPress = () => {
+    Alert.alert("AVISO:", "Voltar sem salvar ocasionará a perda de dados do carregamento.", [
+      {
+        text: 'Cancelar',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      { text: 'Sim', onPress: () => navigation.goBack() },
+    ]);
+    return true;
+  };
+
   return isWhite ? (
     <View style={styles.header}>
       <RectButton
         style={{ flexDirection: "row", alignItems: "center" }}
-        onPress={() => navigation.goBack()}>
+        onPress={() => onBackPress()}>
         <Icon name="chevron-double-left" size={24} color="#DEDEE3" />
         <Text style={{ color: "#FFF" }}>Voltar</Text>
       </RectButton>

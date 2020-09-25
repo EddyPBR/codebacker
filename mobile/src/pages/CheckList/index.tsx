@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Alert, BackHandler } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FeatherIcons from "react-native-vector-icons/Feather";
@@ -20,6 +20,18 @@ const CheckList = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigation();
+
+  const onBackPress = () => {
+    Alert.alert("AVISO:", "Voltar sem salvar ocasionará a perda de dados do carregamento.", [
+      {
+        text: 'Cancelar',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      { text: 'Sim', onPress: () => navigation.goBack() },
+    ]);
+    return true;
+  };
 
   const storeClearData = async () => {
     await AsyncStorage.clear();
@@ -47,6 +59,14 @@ const CheckList = () => {
     React.useCallback(() => {
       getLoadingCode();
       getLoadsList();
+    }, [])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, [])
   );
 

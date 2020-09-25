@@ -13,7 +13,6 @@ import {
 const codebacker = require("../../assets/Codebacker/codebacker.png");
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
-import LoadingAnimation from "../../components/LoadingAnimation";
 
 import { AsyncStorage } from "react-native";
 
@@ -23,8 +22,7 @@ import api from "../../services/api";
 
 const Home = () => {
   const [loadingCode, setLoadingCode] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
+  
   const navigation = useNavigation();
 
   const storeClearData = async () => {
@@ -44,13 +42,10 @@ const Home = () => {
 
   const requestLoadsList = async (id: string) => {
     try {
-      setIsLoading(true);
       const loads = await api.get(`/loads/${id}`);
       return loads;
     } catch (error) {
       return "error404";
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -58,7 +53,8 @@ const Home = () => {
     if (loadingCode === "0") {
       return alert("ERROR: Código inválido!")
     }
-    const loadsData = await requestLoadsList(loadingCode); // will be a async function to acess the Database
+
+    const loadsData = await requestLoadsList(loadingCode);
 
     if (loadsData === "error404") {
       return alert("ERROR 404: O servidor não respondeu ou não foram encontrados carregamentos!");
@@ -101,14 +97,6 @@ const Home = () => {
     await storeUnicData("@loadingCode", loadingCode);
     
     navigation.navigate("CheckList");
-  }
-
-  if(isLoading === true) {
-    return(
-      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <LoadingAnimation />
-      </View>
-    );
   }
 
   return (

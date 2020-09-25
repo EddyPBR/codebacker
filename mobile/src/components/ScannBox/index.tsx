@@ -210,7 +210,8 @@ const ScannBox = (params: Params) => {
 const styles = StyleSheet.create({
   scannBox: {
     width: 220,
-    height: 275,
+    height: "100%",
+    maxHeight: 245,
     backgroundColor: "#FFF",
     marginHorizontal: 15,
     borderRadius: 10,
@@ -261,9 +262,11 @@ const styles = StyleSheet.create({
   boxBody: {
     flexDirection: "column",
     paddingHorizontal: 16,
+    marginBottom: -8,
+    marginTop: -8,
   },
   field: {
-    marginTop: 16,
+    marginTop: 8,
   },
   label: {
     fontSize: 14,

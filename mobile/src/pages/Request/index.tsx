@@ -116,7 +116,7 @@ const Request = () => {
 const styles = StyleSheet.create({
   main: {
     width: "100%",
-    height: 240,
+    height: "40%",
     backgroundColor: "#E32F34",
     paddingTop: 30,
     paddingBottom: 16,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   scannList: {
     flexDirection: "row",
     height: 320,
-    marginTop: 40,
+    marginTop: 20,
   },
 });
 

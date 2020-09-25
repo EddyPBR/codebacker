@@ -112,7 +112,7 @@ const CheckList = () => {
   }
 
   const updateRequestLoad = () => {
-    const status = (trulyCarCode === carCod && trulyProductCode === productCod) ? "sucess" : "fail";
+    const status = (trulyCarCode == carCod && trulyProductCode === productCod) ? "sucess" : "fail";
 
     const newVolume = {
       numVolume: volume.numVolume,
@@ -284,7 +284,7 @@ const CheckList = () => {
           </View>
           <View style={styles.field}>
             <Text style={styles.label}>Cód. obtido</Text>
-            {trulyCarCode === carCod ? (
+            {trulyCarCode == carCod ? (
               <TextInput
                 style={styles.inputSucess}
                 autoCorrect={false}

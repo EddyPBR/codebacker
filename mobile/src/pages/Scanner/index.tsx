@@ -237,7 +237,7 @@ const CheckList = () => {
 
         <View style={styles.form}>
           <View style={styles.fieldRow}>
-            <FontAwesome5 name="box-open" size={32} color="#E53035" />
+            <FontAwesome5 name="box-open" size={28} color="#E53035" />
             <View style={styles.field}>
               <Text style={styles.label}>Cód. esperado</Text>
               <TextInput
@@ -278,7 +278,7 @@ const CheckList = () => {
           </View>
 
           <View style={styles.fieldRow}>
-            <FontAwesome5 name="car-side" size={32} color="#E53035" />
+            <FontAwesome5 name="car-side" size={28} color="#E53035" />
             <View style={styles.field}>
               <Text style={styles.label}>Cód. esperado</Text>
               <TextInput
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   scann: {
-    height: 430,
+    height: 240,
     width: "100%",
     backgroundColor: "#000",
   },
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 12,
-    width: 100,
+    width: 110,
     height: 30,
     paddingHorizontal: 8,
     borderRadius: 5,
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
   },
   inputSucess: {
     fontSize: 12,
-    width: 100,
+    width: 110,
     height: 30,
     paddingHorizontal: 8,
     borderRadius: 5,

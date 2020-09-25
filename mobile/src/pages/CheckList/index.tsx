@@ -14,6 +14,8 @@ import { AsyncStorage } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 
+import api from "../../services/api";
+
 const CheckList = () => {
   const [loadingCode, setLoadingCode] = useState("");
   const [loadsList, setLoadsList] = useState([]);
@@ -53,6 +55,18 @@ const CheckList = () => {
   async function handleSaveCleanAndOut() {
     await storeClearData();
     navigation.goBack();
+  }
+
+  const handleSubmitData = async () => {
+    try {
+      setIsLoading(true);
+      await api.post(`/save`, loadsList);
+      return handleSaveCleanAndOut();
+    } catch (error) {
+      return "error404";
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useFocusEffect(
@@ -101,7 +115,7 @@ const CheckList = () => {
 
       <LinearGradient colors={["#2EB363", "#1E8F4B"]} style={styles.button}>
         <RectButton
-          onPress={() => handleSaveCleanAndOut()}
+          onPress={() => handleSubmitData()}
           style={styles.buttonContent}>
           <FeatherIcons name="save" size={24} color="#DEDEE3" style={{ marginRight: 8 }} />
           <Text style={styles.buttonText}>Finalizar</Text>
@@ -171,3 +185,4 @@ const styles = StyleSheet.create({
 });
 
 export default CheckList;
+

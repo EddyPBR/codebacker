@@ -104,9 +104,6 @@ const Home = () => {
       style={styles.main}
       behavior={Platform.OS === "ios" ? "padding" : undefined}>
       <Image source={codebacker} />
-      <Text style={styles.subTitle}>
-        Agilize seu carregamento de produtos com checklist dinâmico
-      </Text>
       <View style={styles.form}>
         <Text style={styles.label}>Código de carregamento</Text>
         <TextInput
@@ -143,7 +140,7 @@ const styles = StyleSheet.create({
     color: "#9D6C70",
   },
   form: {
-    marginTop: 30,
+    marginTop: 8,
     justifyContent: "center",
   },
   label: {
@@ -164,7 +161,7 @@ const styles = StyleSheet.create({
     width: 160,
     height: 46,
     borderRadius: 10,
-    marginTop: 30,
+    marginTop: 16,
     alignSelf: "center",
     shadowColor: "#000",
     shadowOffset: {

@@ -13,6 +13,7 @@ import {
 const codebacker = require("../../assets/Codebacker/codebacker.png");
 import { RectButton } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 import { AsyncStorage } from "react-native";
 
@@ -22,6 +23,7 @@ import api from "../../services/api";
 
 const Home = () => {
   const [loadingCode, setLoadingCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
 
@@ -42,10 +44,13 @@ const Home = () => {
 
   const requestLoadsList = async (id: string) => {
     try {
+      setIsLoading(true);
       const loads = await api.get(`/loads/${id}`);
       return loads;
     } catch (error) {
       return "error404";
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -96,6 +101,14 @@ const Home = () => {
     await storeUnicData("@loadingCode", loadingCode);
     
     navigation.navigate("CheckList");
+  }
+
+  if(isLoading === true) {
+    return(
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <LoadingAnimation />
+      </View>
+    );
   }
 
   return (

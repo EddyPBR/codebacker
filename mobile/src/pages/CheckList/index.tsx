@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Alert, BackHandler } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";

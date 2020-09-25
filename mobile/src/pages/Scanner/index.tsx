@@ -88,10 +88,10 @@ const CheckList = () => {
     setTypeToScan("");
   };
 
-  function prepareScann(type: string) {
-    setScanned(false);
-    setTypeToScan(type);
-  }
+  // function prepareScann(type: string) {
+  //   setScanned(false);
+  //   setTypeToScan(type);
+  // }
 
   const storeData = async (key: string, value: Object) => {
     const jsonValue = JSON.stringify(value);
@@ -165,7 +165,7 @@ const CheckList = () => {
       <View style={styles.main}>
         <BarCodeScanner onBarCodeScanned={handleBarCodeScanned} style={styles.scann} />
 
-        {typeToScan === "" && (
+        {/* {typeToScan === "" && (
           <View
             style={{
               flexDirection: "row",
@@ -229,7 +229,7 @@ const CheckList = () => {
               Escaneando o Veículo...
             </Text>
           </View>
-        )}
+        )} */}
 
         <Text style={styles.text}>
           Faça o scaneamento automático do código ou informe manualmente.
